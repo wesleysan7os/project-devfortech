@@ -3,5 +3,5 @@ export function App() {
     <div className="App">
       <h3>Grupo 4</h3>
     </div>
-  );
+  )
 }
