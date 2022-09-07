@@ -1,3 +1,6 @@
+import { Header } from './components/Header'
+import { GlobalStyle } from './styles/global'
+
 import React, { useState } from 'react'
 import { Button } from 'react-bootstrap'
 
@@ -9,12 +12,13 @@ export function App() {
 
   const handleClose = () => setDisplayModal(false)
   return (
-    <div className="App">
-      <h3>Grupo 4</h3>
+    <>
+      <Header />
+      <GlobalStyle />
       <Button variant="primary" onClick={() => setDisplayModal(true)}>
         Abrir modal teste
       </Button>
       <TransactionModal show={displayModal} onClose={handleClose} />
-    </div>
+    </>
   )
 }
