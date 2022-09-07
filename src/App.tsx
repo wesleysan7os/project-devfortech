@@ -1,7 +1,13 @@
+import { Container, Header } from './styles/global'
+
 export function App() {
   return (
-    <div className="App">
-      <h3>Grupo 4</h3>
-    </div>
+    <Container>
+      <Header>
+        <div className="summary-transaction"></div>
+        <div className="transaction-modal"></div>
+        <div className="line-chart"></div>
+      </Header>
+    </Container>
   )
 }
