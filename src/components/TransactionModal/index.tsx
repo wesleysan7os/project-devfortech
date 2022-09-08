@@ -15,10 +15,15 @@ import { CATEGORIES } from '../../constants/categories'
 
 type ModalProps = {
   show: boolean
+  transactionType: 'withdraw' | 'deposit'
   onClose: () => void
 }
 
-export function TransactionModal({ show, onClose }: ModalProps) {
+export function TransactionModal({
+  show,
+  onClose,
+  transactionType,
+}: ModalProps) {
   const [isTransactionDataValid, setIsTransactionDataValid] = useState(false)
   const [showToastSuccessMessage, setShowToastSuccessMessage] = useState(false)
 
@@ -35,7 +40,9 @@ export function TransactionModal({ show, onClose }: ModalProps) {
       <Modal show={show} onHide={onClose} centered>
         <Container>
           <Modal.Header className="mb-2">
-            <Modal.Title>Cadastrar Receita</Modal.Title>
+            <Modal.Title>
+              Cadastrar {transactionType === 'deposit' ? 'Receita' : 'Despesa'}
+            </Modal.Title>
             <button className="close-button">
               <X size={20} onClick={onClose} />
             </button>
