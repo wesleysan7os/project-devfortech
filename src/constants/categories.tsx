@@ -1,6 +1,6 @@
 export const CATEGORIES = [
   {
-    name: '',
+    name: 'Geral',
     id: 0,
   },
   {
@@ -8,7 +8,7 @@ export const CATEGORIES = [
     id: 1,
   },
   {
-    name: 'Academia',
+    name: 'Academia e Esportes',
     id: 2,
   },
   {

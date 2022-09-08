@@ -25,3 +25,9 @@ export const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
 `
+
+export const ErrorSpan = styled.span`
+margin: 5px 0;
+color: tomato;
+font-size: 14px;
+`;
