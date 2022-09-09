@@ -119,7 +119,7 @@ export function TransactionModal({
             </button>
           </Modal.Header>
           <Modal.Body>
-            <form onSubmit={(e) => handleSubmit(e)}>
+            <Form onSubmit={(e) => handleSubmit(e)}>
               <Form.Group className="mb-3">
                 <FloatingLabel label="Título" controlId="formBasicTitle">
                   <Form.Control
@@ -177,7 +177,7 @@ export function TransactionModal({
                   Cancelar
                 </Button>
               </ButtonGroup>
-            </form>
+            </Form>
           </Modal.Body>
         </Container>
       </Modal>
