@@ -86,12 +86,20 @@ export function TransactionModal({
     setValueError(false)
   }
 
+  //foca no input de titulo da despesa no momento em que o modal é carregado
+  function onModalLoad() {
+    titleInput?.current?.focus()
+  }
+
+  const stringObligatoryField: string = '*Campo obrigatório'
+
   return (
     <>
       <Modal
         ref={formRef}
         show={show}
         onHide={onClose}
+        onEntered={onModalLoad}
         onExited={onExited}
         centered
         dialogClassName="modal-90w"
@@ -129,7 +137,7 @@ export function TransactionModal({
                     ref={titleInput}
                   />
                 </FloatingLabel>
-                <ErrorSpan>{titleError && '*Campo Obrigatório.'}</ErrorSpan>
+                <ErrorSpan>{titleError && stringObligatoryField}</ErrorSpan>
               </Form.Group>
 
               <Form.Group className="mb-3">
@@ -140,7 +148,7 @@ export function TransactionModal({
                     ref={valueInput}
                   />
                 </FloatingLabel>
-                <ErrorSpan>{valueError && '*Campo Obrigatório'}</ErrorSpan>
+                <ErrorSpan>{valueError && stringObligatoryField}</ErrorSpan>
               </Form.Group>
 
               <Form.Group className="mb-5">
@@ -161,7 +169,7 @@ export function TransactionModal({
                     ))}
                   </Form.Select>
                 </FloatingLabel>
-                <ErrorSpan>{categoryError && '*Campo Obrigatório'}</ErrorSpan>
+                <ErrorSpan>{categoryError && stringObligatoryField}</ErrorSpan>
               </Form.Group>
 
               <ButtonGroup className="d-flex gap-3">
