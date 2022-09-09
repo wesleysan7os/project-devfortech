@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Modal } from 'react-bootstrap'
 
 export const Container = styled.main`
   background-color: #323131;
@@ -27,7 +28,7 @@ export const ButtonDiv = styled.div`
 `
 
 export const ErrorSpan = styled.span`
-margin: 5px 0;
-color: tomato;
-font-size: 14px;
-`;
+  margin: 5px 0;
+  color: tomato;
+  font-size: 14px;
+`

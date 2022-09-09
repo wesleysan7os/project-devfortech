@@ -1,5 +1,5 @@
 import { FormEvent, useState, useRef, useEffect } from 'react'
-import { X, Checks } from 'phosphor-react'
+import { X, Checks, TrendDown, TrendUp } from 'phosphor-react'
 import {
   Modal,
   Form,
@@ -38,8 +38,9 @@ export function TransactionModal({
 
   //Refs
   let titleInput = useRef<HTMLInputElement | null>(null)
-  let valueInput = useRef<HTMLInputElement>(null)
+  let valueInput = useRef<HTMLInputElement | null>(null)
   let categoryInput = useRef<HTMLSelectElement | null>(null)
+  let formRef = useRef<HTMLFormElement>()
 
   function handleValidation(): boolean {
     //manipula as mensagens de erro
@@ -67,6 +68,7 @@ export function TransactionModal({
     }
   }
 
+  //funçao executada ao clicar em 'salvar'
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
 
@@ -77,12 +79,39 @@ export function TransactionModal({
     }
   }
 
+  //funçao que 'limpa' o modal quando ele é fechado
+  function onExited() {
+    setCategoryError(false)
+    setTitleError(false)
+    setValueError(false)
+  }
+
   return (
     <>
-      <Modal show={show} onHide={onClose} centered>
+      <Modal
+        ref={formRef}
+        show={show}
+        onHide={onClose}
+        onExited={onExited}
+        centered
+        dialogClassName="modal-90w"
+      >
         <Container>
           <Modal.Header className="mb-2">
             <Modal.Title>
+              {transactionType === 'deposit' ? (
+                <TrendUp
+                  size={32}
+                  color="#90EE90"
+                  style={{ marginRight: '0.8rem' }}
+                />
+              ) : (
+                <TrendDown
+                  size={32}
+                  color="tomato"
+                  style={{ marginRight: '0.8rem' }}
+                />
+              )}
               Cadastrar {transactionType === 'deposit' ? 'Receita' : 'Despesa'}
             </Modal.Title>
             <button className="close-button">
@@ -90,7 +119,7 @@ export function TransactionModal({
             </button>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={(e) => handleSubmit(e)}>
+            <form onSubmit={(e) => handleSubmit(e)}>
               <Form.Group className="mb-3">
                 <FloatingLabel label="Título" controlId="formBasicTitle">
                   <Form.Control
@@ -148,7 +177,7 @@ export function TransactionModal({
                   Cancelar
                 </Button>
               </ButtonGroup>
-            </Form>
+            </form>
           </Modal.Body>
         </Container>
       </Modal>
