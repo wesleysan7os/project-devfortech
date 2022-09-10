@@ -25,25 +25,21 @@ export function TransactionModal({
   onClose,
   transactionType,
 }: ModalProps) {
-  //States
   const [isTransactionDataValid, setIsTransactionDataValid] =
-    useState<boolean>(false)
+    useState(false)
   const [showToastSuccessMessage, setShowToastSuccessMessage] =
-    useState<boolean>(false)
+    useState(false)
 
-  //States das mensagens de erro do modal
-  const [titleError, setTitleError] = useState<boolean>(false)
-  const [valueError, setValueError] = useState<boolean>(false)
-  const [categoryError, setCategoryError] = useState<boolean>(false)
+  const [titleError, setTitleError] = useState(false)
+  const [valueError, setValueError] = useState(false)
+  const [categoryError, setCategoryError] = useState(false)
 
-  //Refs
   let titleInput = useRef<HTMLInputElement | null>(null)
   let valueInput = useRef<HTMLInputElement | null>(null)
   let categoryInput = useRef<HTMLSelectElement | null>(null)
   let formRef = useRef<HTMLFormElement>()
 
-  function handleValidation(): boolean {
-    //manipula as mensagens de erro
+  function isModalDataValid(): boolean {
     isTitleValid(titleInput?.current?.value)
       ? setTitleError(false)
       : setTitleError(true)
@@ -56,7 +52,6 @@ export function TransactionModal({
       ? setCategoryError(false)
       : setCategoryError(true)
 
-    //faz a validação e retorna true ou false
     if (
       isTitleValid(titleInput?.current?.value) &&
       isValueValid(valueInput?.current?.value) &&
@@ -68,145 +63,122 @@ export function TransactionModal({
     }
   }
 
-  //funçao executada ao clicar em 'salvar'
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
 
-    if (handleValidation()) {
+    if (isModalDataValid()) {
       setIsTransactionDataValid(true)
       setShowToastSuccessMessage(true)
       onClose()
     }
   }
 
-  //funçao que 'limpa' o modal quando ele é fechado
-  function onExited() {
+  function handleExited() {
     setCategoryError(false)
     setTitleError(false)
     setValueError(false)
   }
 
-  //foca no input de titulo da despesa no momento em que o modal é carregado
-  function onModalLoad() {
+  function handleModalLoad() {
     titleInput?.current?.focus()
   }
 
   const stringObligatoryField: string = '*Campo obrigatório'
 
   return (
-    <>
-      <Modal
-        ref={formRef}
-        show={show}
-        onHide={onClose}
-        onEntered={onModalLoad}
-        onExited={onExited}
-        centered
-        dialogClassName="modal-90w"
-      >
-        <Container>
-          <Modal.Header className="mb-2">
-            <Modal.Title>
-              {transactionType === 'deposit' ? (
-                <TrendUp
-                  size={32}
-                  color="#90EE90"
-                  style={{ marginRight: '0.8rem' }}
+    <Modal
+      ref={formRef}
+      show={show}
+      onHide={onClose}
+      onEntered={handleModalLoad}
+      onExited={handleExited}
+      centered
+      dialogClassName="modal-90w"
+    >
+      <Container>
+        <Modal.Header className="mb-2">
+          <Modal.Title>
+            {transactionType === 'deposit' ? (
+              <TrendUp
+                size={32}
+                color="#90EE90"
+                style={{ marginRight: '0.8rem' }}
+              />
+            ) : (
+              <TrendDown
+                size={32}
+                color="tomato"
+                style={{ marginRight: '0.8rem' }}
+              />
+            )}
+            Cadastrar {transactionType === 'deposit' ? 'Receita' : 'Despesa'}
+          </Modal.Title>
+          <button className="close-button">
+            <X size={20} onClick={onClose} />
+          </button>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={(e) => handleSubmit(e)}>
+            <Form.Group className="mb-3">
+              <FloatingLabel label="Título" controlId="formBasicTitle">
+                <Form.Control
+                  type="text"
+                  placeholder="Título da transação"
+                  maxLength={30}
+                  ref={titleInput}
                 />
-              ) : (
-                <TrendDown
-                  size={32}
-                  color="tomato"
-                  style={{ marginRight: '0.8rem' }}
+              </FloatingLabel>
+              <ErrorSpan>{titleError && stringObligatoryField}</ErrorSpan>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <FloatingLabel label="Valor" controlId="formBasicValue">
+                <Form.Control
+                  type="number"
+                  placeholder="Valor da transação"
+                  ref={valueInput}
                 />
-              )}
-              Cadastrar {transactionType === 'deposit' ? 'Receita' : 'Despesa'}
-            </Modal.Title>
-            <button className="close-button">
-              <X size={20} onClick={onClose} />
-            </button>
-          </Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={(e) => handleSubmit(e)}>
-              <Form.Group className="mb-3">
-                <FloatingLabel label="Título" controlId="formBasicTitle">
-                  <Form.Control
-                    type="text"
-                    placeholder="Título da transação"
-                    maxLength={30}
-                    ref={titleInput}
-                  />
-                </FloatingLabel>
-                <ErrorSpan>{titleError && stringObligatoryField}</ErrorSpan>
-              </Form.Group>
+              </FloatingLabel>
+              <ErrorSpan>{valueError && stringObligatoryField}</ErrorSpan>
+            </Form.Group>
 
-              <Form.Group className="mb-3">
-                <FloatingLabel label="Valor" controlId="formBasicValue">
-                  <Form.Control
-                    type="number"
-                    placeholder="Valor da transação"
-                    ref={valueInput}
-                  />
-                </FloatingLabel>
-                <ErrorSpan>{valueError && stringObligatoryField}</ErrorSpan>
-              </Form.Group>
-
-              <Form.Group className="mb-5">
-                {' '}
-                <FloatingLabel
-                  controlId="floatingSelect"
-                  label="Selecione a categoria"
+            <Form.Group className="mb-5">
+              {' '}
+              <FloatingLabel
+                controlId="floatingSelect"
+                label="Selecione a categoria"
+              >
+                <Form.Select
+                  aria-label="category's options"
+                  ref={categoryInput}
                 >
-                  <Form.Select
-                    aria-label="category's options"
-                    ref={categoryInput}
-                  >
-                    <option selected={true} value={undefined}></option>
-                    {CATEGORIES.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </FloatingLabel>
-                <ErrorSpan>{categoryError && stringObligatoryField}</ErrorSpan>
-              </Form.Group>
+                  <option selected={true} value={undefined}></option>
+                  {CATEGORIES.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </Form.Select>
+              </FloatingLabel>
+              <ErrorSpan>{categoryError && stringObligatoryField}</ErrorSpan>
+            </Form.Group>
 
-              <ButtonGroup className="d-flex gap-3">
-                <Button variant="success" type="submit" className="rounded">
-                  Salvar
-                </Button>
-                <Button
-                  variant="secondary"
-                  type="button"
-                  className="rounded"
-                  onClick={onClose}
-                >
-                  Cancelar
-                </Button>
-              </ButtonGroup>
-            </Form>
-          </Modal.Body>
-        </Container>
-      </Modal>
-      {isTransactionDataValid && (
-        <ToastContainer position="top-end" style={{ margin: '5px' }}>
-          <Toast
-            onClose={() => setShowToastSuccessMessage(false)}
-            show={showToastSuccessMessage}
-            delay={3000}
-            autohide
-            bg="light"
-          >
-            <Toast.Header className="gap-2">
-              <Checks size={20} />
-              <strong className="me-auto">Sucesso!</strong>
-              <small>0 mins ago</small>
-            </Toast.Header>
-            <Toast.Body>Transação adicionada.</Toast.Body>
-          </Toast>
-        </ToastContainer>
-      )}
-    </>
+            <ButtonGroup className="d-flex gap-3">
+              <Button variant="success" type="submit" className="rounded">
+                Salvar
+              </Button>
+              <Button
+                variant="secondary"
+                type="button"
+                className="rounded"
+                onClick={onClose}
+              >
+                Cancelar
+              </Button>
+            </ButtonGroup>
+          </Form>
+        </Modal.Body>
+      </Container>
+    </Modal>
   )
 }
