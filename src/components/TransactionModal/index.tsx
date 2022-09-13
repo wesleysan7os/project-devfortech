@@ -151,7 +151,7 @@ export function TransactionModal({
                 <ErrorSpan>{valueError && stringObligatoryField}</ErrorSpan>
               </Form.Group>
 
-              <Form.Group className="mb-5">
+              <Form.Group className="mb-3">
                 {' '}
                 <FloatingLabel
                   controlId="floatingSelect"
