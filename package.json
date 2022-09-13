@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/react-bootstrap": "^0.32.30",
     "axios": "^0.27.2",
+    "miragejs": "^0.1.45",
     "bootstrap": "^5.2.0",
     "phosphor-react": "^1.4.1",
     "prettier": "^2.7.1",
@@ -55,8 +56,8 @@
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.31.1",
-    "miragejs": "^0.1.45",
     "typescript": "*",
+    "@vitejs/plugin-react": "1.1.1",
     "vite": "2.7.0"
   }
 }
