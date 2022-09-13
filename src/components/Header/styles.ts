@@ -6,6 +6,7 @@ export const StyledHeader = styled.header`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0.7rem;
+  color: #F5F5F5;
   border-radius: 0.5rem;
   background-color: #222;
   grid-template-columns: 4fr 3fr;
@@ -16,17 +17,7 @@ export const StyledHeader = styled.header`
     'transactions-summary transaction-modal'
     'transactions-summary line-chart';
 
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #f5f5f5;
-    font-weight: bold;
-    font-size: larger;
-    border-radius: 0.5rem;
-  }
-
-  .transactions-summary {
+    .transactions-summary {
     grid-area: transactions-summary;
     background-color: #414141;
   }

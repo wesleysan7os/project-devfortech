@@ -1,13 +1,11 @@
 import { FormEvent, useState, useRef, useEffect } from 'react'
-import { X, Checks, TrendDown, TrendUp } from 'phosphor-react'
+import { X, TrendDown, TrendUp } from 'phosphor-react'
 import {
   Modal,
   Form,
   Button,
   FloatingLabel,
   ButtonGroup,
-  Toast,
-  ToastContainer,
 } from 'react-bootstrap'
 
 import { Container, ErrorSpan } from './styles'
