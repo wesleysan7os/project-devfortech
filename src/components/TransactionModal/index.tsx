@@ -13,6 +13,7 @@ import {
 import { Container, ErrorSpan } from './styles'
 import { CATEGORIES } from '../../constants/categories'
 import { isCategoryValid, isTitleValid, isValueValid } from './validations'
+import { toast } from 'react-toastify'
 
 type ModalProps = {
   show: boolean
@@ -68,6 +69,11 @@ export function TransactionModal({
       setIsTransactionDataValid(true)
       setShowToastSuccessMessage(true)
       onClose()
+      toast.success(
+        `${
+          transactionType === 'withdraw' ? 'Despesa' : 'Receita'
+        } cadastrada com sucesso.`,
+      )
     }
   }
 
