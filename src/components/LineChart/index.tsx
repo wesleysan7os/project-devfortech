@@ -57,16 +57,16 @@ const data = [
 export function LineChartTotal() {
   return (
     <LineChart
-      width={730}
-      height={250}
+      width={640}
+      height={110}
       data={data}
-      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+      // margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
+      {/* <XAxis dataKey="name" /> */}
+      {/* <YAxis /> */}
       <Tooltip />
-      <Legend />
+      {/* <Legend /> */}
       <Line type="monotone" dataKey="despesa" stroke="#FF3C26" />
       <Line type="monotone" dataKey="receita" stroke="#69D959" />
     </LineChart>

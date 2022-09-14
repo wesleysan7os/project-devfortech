@@ -1,4 +1,5 @@
 import { AddTransactionsArea } from '../AddTransactionsArea'
+import { LineChartTotal } from '../LineChart'
 import { StyledHeader } from './styles'
 
 export function Header() {
@@ -8,7 +9,9 @@ export function Header() {
       <div className="transaction-modal">
         <AddTransactionsArea />
       </div>
-      <div className="line-chart">Line Chart</div>
+      <div className="line-chart">
+        <LineChartTotal />
+      </div>
     </StyledHeader>
   )
 }
