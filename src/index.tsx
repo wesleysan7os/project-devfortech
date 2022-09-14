@@ -19,17 +19,17 @@ createServer({
         {
           id: 1,
           title: 'Feelance de website',
-          type: 'income',
+          type: 'deposit',
           category: 'Dev',
-          price: 6000,
+          amount: 6000,
           createdAt: new Date('2022-09-07 06:00:00')
         },
         {
           id: 2,
           title: 'Aluguel',
-          type: 'outcome',
+          type: 'withdraw',
           category: 'Casa',
-          price: 1100,
+          amount: 1100,
           createdAt: new Date('2022-09-02 10:00:00')
         },
       ]
@@ -44,7 +44,7 @@ createServer({
 
     this.post('/transactions', (schema, request) => {
       const data = JSON.parse(request.requestBody)
-      return schema.transactions.create(data)
+      return schema.create('transaction', data)
     })
 
     this.patch("/transactions/:id", (schema, request) => {

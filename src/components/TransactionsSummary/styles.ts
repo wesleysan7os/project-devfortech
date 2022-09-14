@@ -20,8 +20,6 @@ export const Container = styled.div`
 
     span {
       color: #69D959;
-      color: transparent;
-      text-shadow: 0 0 7px rgb(105, 217, 89);
     }
   }
 
@@ -30,8 +28,6 @@ export const Container = styled.div`
 
     span {
       color: #FF3C26;
-      color: transparent;
-      text-shadow: 0 0 7px rgb(255, 60, 38);
     }
   }
 
@@ -39,6 +35,11 @@ export const Container = styled.div`
     background-color: #414141;
     border-radius: 0.5rem;
     padding: 0.5rem 1.5rem;
+
+    .summaryBlur {
+      color: transparent;
+      text-shadow: 0 0 9px rgba(255, 255, 255, 0.5);
+    }
 
     header {
       margin-bottom: 4rem;
@@ -51,9 +52,10 @@ export const Container = styled.div`
       font-size: 1.3rem;
     }
 
-    section h2 {
-      color: transparent;
-      text-shadow: 0 0 9px rgba(255, 255, 255, 0.5);
+    section button {
+      background-color: transparent;
+      color: #F5F5F5;
+      border: none;
     }
   }
 
@@ -65,6 +67,16 @@ export const Container = styled.div`
     background-color: #414141;
     border-radius: 0.5rem;
     padding-left: 1rem;
+
+    .incomeBlur {
+      color: transparent;
+      text-shadow: 0 0 7px rgb(105, 217, 89);
+    }
+
+    .outcomeBlur {
+      color: transparent;
+      text-shadow: 0 0 7px rgb(255, 60, 38);
+    }
 
     h4 {
       font-weight: normal;
@@ -82,7 +94,6 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-
   }
 
 `
