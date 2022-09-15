@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const StyledHeader = styled.header`
   display: grid;
   height: 260px;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0.7rem;
   color: #F5F5F5;

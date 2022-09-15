@@ -38,7 +38,7 @@ export const Container = styled.div`
 
     .summaryBlur {
       color: transparent;
-      text-shadow: 0 0 9px rgba(255, 255, 255, 0.5);
+      text-shadow: 0 0 11px rgba(255, 255, 255, 0.5);
     }
 
     header {
@@ -70,12 +70,12 @@ export const Container = styled.div`
 
     .incomeBlur {
       color: transparent;
-      text-shadow: 0 0 7px rgb(105, 217, 89);
+      text-shadow: 0 0 8px rgb(105, 217, 89);
     }
 
     .outcomeBlur {
       color: transparent;
-      text-shadow: 0 0 7px rgb(255, 60, 38);
+      text-shadow: 0 0 8px rgb(255, 60, 38);
     }
 
     h4 {
@@ -84,7 +84,7 @@ export const Container = styled.div`
 
     span {
       font-size: 1.4rem;
-      font-weight: bold;
+      font-weight: 500;
       white-space:nowrap;
     }
   }
