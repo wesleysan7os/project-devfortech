@@ -27,5 +27,8 @@ export const GlobalStyle = createGlobalStyle`
   body, input, textarea, button{
     font-family: 'Inter', sans-serif;
     font-weight: 400;
+
+    user-select: none;
+    cursor: default;
   }
 `
