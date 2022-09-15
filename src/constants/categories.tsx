@@ -2,10 +2,12 @@ export const CATEGORIES = [
   {
     name: 'Geral',
     id: 0,
+    color: '#FF3C26',
   },
   {
     name: 'Alimentação',
     id: 1,
+    color: '#69D959',
   },
   {
     name: 'Academia e Esportes',

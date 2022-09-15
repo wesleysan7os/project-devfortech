@@ -7,4 +7,8 @@ export const Container = styled.main`
   border-radius: 0.5rem;
   background-color: #222;
   display: flex;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
 `
