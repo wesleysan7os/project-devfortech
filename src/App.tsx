@@ -2,11 +2,13 @@ import { Header } from './components/Header'
 import { GlobalStyle } from './styles/global'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Main from './components/Main'
 
 export function App() {
   return (
     <>
       <Header />
+      <Main />
       <GlobalStyle />
       <ToastContainer
         position="top-right"
