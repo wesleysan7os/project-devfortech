@@ -18,18 +18,98 @@ createServer({
       transactions: [
         {
           id: 1,
-          title: 'Feelance de website',
+          title: 'Teste 1',
           type: 'deposit',
-          category: 'Dev',
-          amount: 6000,
+          category: 'Extra',
+          amount: 12000,
           createdAt: new Date('2022-09-07 06:00:00')
         },
         {
           id: 2,
-          title: 'Aluguel',
+          title: 'Teste 2',
           type: 'withdraw',
-          category: 'Casa',
+          category: 'Pets',
+          amount: 500,
+          createdAt: new Date('2022-09-02 10:00:00')
+        },
+        {
+          id: 3,
+          title: 'Teste 3',
+          type: 'withdraw',
+          category: 'Academia',
+          amount: 550,
+          createdAt: new Date('2022-09-07 06:00:00')
+        },
+        {
+          id: 4,
+          title: 'Teste 4',
+          type: 'withdraw',
+          category: 'Investimentos',
+          amount: 100,
+          createdAt: new Date('2022-09-02 10:00:00')
+        },
+        {
+          id: 5,
+          title: 'Teste 5',
+          type: 'withdraw',
+          category: 'Educação',
+          amount: 4000,
+          createdAt: new Date('2022-09-07 06:00:00')
+        },
+        {
+          id: 6,
+          title: 'Teste 6',
+          type: 'withdraw',
+          category: 'Transporte',
           amount: 1100,
+          createdAt: new Date('2022-09-02 10:00:00')
+        },
+        {
+          id: 7,
+          title: 'Teste 7',
+          type: 'withdraw',
+          category: 'Saúde',
+          amount: 600,
+          createdAt: new Date('2022-09-07 06:00:00')
+        },
+        {
+          id: 8,
+          title: 'Teste 8',
+          type: 'withdraw',
+          category: 'Alimentação',
+          amount: 4200,
+          createdAt: new Date('2022-09-02 10:00:00')
+        },
+        {
+          id: 9,
+          title: 'Teste 9',
+          type: 'deposit',
+          category: 'Extra',
+          amount: 600,
+          createdAt: new Date('2022-09-07 06:00:00')
+        },
+        {
+          id: 10,
+          title: 'Teste 10',
+          type: 'withdraw',
+          category: 'Academia',
+          amount: 300,
+          createdAt: new Date('2022-09-02 10:00:00')
+        },
+        {
+          id: 11,
+          title: 'Teste 11',
+          type: 'deposit',
+          category: 'Academia',
+          amount: 2000,
+          createdAt: new Date('2022-09-07 06:00:00')
+        },
+        {
+          id: 12,
+          title: 'Teste 12',
+          type: 'withdraw',
+          category: 'Extra',
+          amount: 1000,
           createdAt: new Date('2022-09-02 10:00:00')
         },
       ]

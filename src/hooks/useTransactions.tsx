@@ -6,7 +6,10 @@ interface Transaction {
   id: number;
   title: string;
   type: 'deposit' | 'withdraw';
-  category: 'string';
+  category: 
+    'Alimentação' | 'Academia' | 'Saúde' | 
+    'Investimentos' | 'Pets' | 'Educação' |
+    'Transporte' | 'Extra';
   amount: number;
   createdAt: Date;
 }

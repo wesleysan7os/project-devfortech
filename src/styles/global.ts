@@ -22,7 +22,6 @@ export const GlobalStyle = createGlobalStyle`
   body{
     background: var(--background);
     -webkit-font-smoothing: antialiased;
-    padding: 2.4rem 0;
   }
 
   body, input, textarea, button{

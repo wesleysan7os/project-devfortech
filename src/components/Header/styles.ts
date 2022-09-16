@@ -4,7 +4,7 @@ export const StyledHeader = styled.header`
   display: grid;
   height: 260px;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 2rem auto 1rem;
   padding: 0.7rem;
   color: #F5F5F5;
   border-radius: 0.5rem;
