@@ -11,10 +11,8 @@ import {
 import { Container, ErrorSpan } from './styles'
 import { isCategoryValid, isTitleValid, isValueValid } from './validations'
 import { toast } from 'react-toastify'
-import { IMaskInput } from 'react-imask'
 import { NumericFormat } from 'react-number-format'
 import { useTransactions } from '../../hooks/useTransactions'
-import { off } from 'process'
 
 type ModalProps = {
   show: boolean
@@ -43,18 +41,14 @@ export function TransactionModal({
   const [isTransactionDataValid, setIsTransactionDataValid] = useState(false)
 
   const [titleInput, setTitleInput] = useState('')
-  const [valueInput, setValueInput] = useState('')
+  const [valueInput, setValueInput] = useState(0)
   const [categoryInput, setCategoryInput] = useState<CategorysType>('')
+  const [dateInput, setDateInput] = useState<Date>(new Date())
 
   const [titleError, setTitleError] = useState(false)
   const [valueError, setValueError] = useState(false)
   const [categoryError, setCategoryError] = useState(false)
-  const [valueInput, setValueInput] = useState<number | undefined>(0)
 
-  let titleInput = useRef<HTMLInputElement | null>(null)
-  // let valueInput = useRef<HTMLInputElement | null>(null)
-  let categoryInput = useRef<HTMLSelectElement | null>(null)
-  let dateInput = useRef<HTMLInputElement | null>(null)
   let formRef = useRef<HTMLFormElement>()
 
   function isModalDataValid(): boolean {
@@ -81,7 +75,7 @@ export function TransactionModal({
         title: titleInput,
         type: transactionType,
         category: categoryInput,
-        amount: Number(valueInput),
+        amount: valueInput,
       })
       onClose()
       toast.success(
@@ -94,15 +88,10 @@ export function TransactionModal({
 
   function handleExited() {
     setTitleInput('')
-    setValueInput('')
+    setValueInput(0)
     setCategoryInput('')
     setTitleError(false)
     setValueError(false)
-  }
-
-  function handleModalLoad() {
-    titleInput?.current?.focus()
-    dateInput.current!.value = getTodayDate()
   }
 
   function getTodayDate() {
@@ -170,7 +159,7 @@ export function TransactionModal({
                   placeholder="Valor da transação"
                   displayType="input"
                   onValueChange={(values, sourceInfo) => {
-                    setValueInput(values.floatValue)
+                    setValueInput(values.floatValue as number)
                     console.log(values, sourceInfo)
                   }}
                 ></NumericFormat>
@@ -207,7 +196,6 @@ export function TransactionModal({
                 <Form.Control
                   aria-label="Data"
                   type="date"
-                  ref={dateInput}
                   max={getTodayDate()}
                 />
               </FloatingLabel>

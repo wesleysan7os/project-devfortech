@@ -13,7 +13,7 @@ export function App() {
       <GlobalStyle />
       <ToastContainer
         position="top-right"
-        autoClose={1500}
+        autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

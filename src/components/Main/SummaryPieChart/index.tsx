@@ -1,6 +1,6 @@
-import React from 'react'
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts'
-import { CATEGORIES } from '../../constants/categories'
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import { useTransactions } from '../../../hooks/useTransactions'
+
 import { SummaryPieChartContainer } from './styles'
 
 const data = [
@@ -62,7 +62,9 @@ const renderCustomizedLabel = ({
   )
 }
 
-function SummaryPieChart() {
+export function SummaryPieChart() {
+  const { categories } = useTransactions()
+
   return (
     <SummaryPieChartContainer>
       <ResponsiveContainer>
@@ -88,12 +90,12 @@ function SummaryPieChart() {
         </PieChart>
       </ResponsiveContainer>
       <div className="piechart-labels">
-        {CATEGORIES.map((cat) => {
-          return <span key={cat.id}>{cat.name}</span>
+        {categories.map((category) => {
+          if (!!category.name) {
+            return <span key={category.id}>{category.name}</span>
+          }
         })}
       </div>
     </SummaryPieChartContainer>
   )
 }
-
-export default SummaryPieChart
