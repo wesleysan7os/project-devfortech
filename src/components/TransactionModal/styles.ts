@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Modal } from 'react-bootstrap'
 
 export const Container = styled.main`
   background-color: #323131;
