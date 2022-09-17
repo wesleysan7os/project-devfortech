@@ -17,7 +17,7 @@ export const Container = styled.section`
     font-size: 1.2rem;
     list-style-type: none;
     padding-left: 0;
-
+    
     li {
       display: flex;
       align-items: center;

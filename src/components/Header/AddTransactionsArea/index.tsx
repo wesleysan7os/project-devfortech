@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Plus } from 'phosphor-react'
 
 import { Container, StyledButton } from './styles'
-import { TransactionModal } from '../TransactionModal'
+import { TransactionModal } from '../../TransactionModal'
 
 export function AddTransactionsArea() {
   const [displayModal, setDisplayModal] = useState(false)

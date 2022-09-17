@@ -1,5 +1,5 @@
-import { AddTransactionsArea } from '../AddTransactionsArea'
-import { TransactionsSummary } from '../TransactionsSummary'
+import { AddTransactionsArea } from './AddTransactionsArea'
+import { TransactionsSummary } from './TransactionsSummary'
 import { StyledHeader } from './styles'
 
 export function Header() {
