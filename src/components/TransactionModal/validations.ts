@@ -3,9 +3,12 @@ export function isTitleValid(titleInput: string | undefined): boolean {
   return formattedTitleInput ? true : false
 }
 
-export function isValueValid(valueInput: string | undefined): boolean {
-  const valueInt = Number(valueInput)
-  return valueInt && valueInt > 0 && valueInt <= 999999 ? true : false
+export function isValueValid(valueInput: string | number | undefined): boolean {
+  if (valueInput && valueInput > 0 && valueInput <= 999999) {
+    return true
+  } else {
+    return false
+  }
 }
 
 export function isCategoryValid(categoryInput: string | undefined): boolean {

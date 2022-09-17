@@ -1,11 +1,13 @@
-import { ExpensesByCategory } from './ExpensesByCategory'
+import React from 'react'
+import SummaryList from '../SummaryList'
+import SummaryPieChart from '../SummaryPieChart'
 import { Container } from './styles'
 
 export function Main() {
   return (
     <Container>
-      <ExpensesByCategory />
-      <div></div>
+      <SummaryList />
+      <SummaryPieChart />
     </Container>
   )
 }

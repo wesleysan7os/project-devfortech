@@ -1,6 +1,6 @@
 import { AddTransactionsArea } from './AddTransactionsArea'
 import { TransactionsSummary } from './TransactionsSummary'
-import { LineChartTotal } from '../LineChart'
+import { LineChartTotal } from './LineChart'
 import { StyledHeader } from './styles'
 
 export function Header() {
