@@ -4,12 +4,13 @@ import { TransactionsProvider } from './hooks/useTransactions'
 import { GlobalStyle } from './styles/global'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { AppRoutes } from './routes'
 
 export function App() {
   return (
+      
     <TransactionsProvider>
-      <Header />
-      <Main />
+      <AppRoutes />
       <GlobalStyle />
       <ToastContainer
         position="top-right"
