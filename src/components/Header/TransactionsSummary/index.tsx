@@ -37,7 +37,7 @@ export function TransactionsSummary(props: HeaderProps) {
           <h2>Olá 🤑</h2>
           <h4>
             {props.userName}
-            <span onClick={logout}>
+            <span onClick={logout} title="Sair">
               {props.userName ? (
                 <SignOut size={32} weight="thin" />
               ) : (

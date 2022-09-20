@@ -63,10 +63,9 @@ export function LineChartTotal() {
       // margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      {/* <XAxis dataKey="name" /> */}
-      {/* <YAxis /> */}
+      <XAxis dataKey="name" />
+      <YAxis />
       <Tooltip />
-      {/* <Legend /> */}
       <Line type="monotone" dataKey="despesa" stroke="#FF3C26" />
       <Line type="monotone" dataKey="receita" stroke="#69D959" />
     </LineChart>
