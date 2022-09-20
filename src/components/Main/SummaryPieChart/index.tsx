@@ -52,15 +52,11 @@ const renderCustomizedLabel = ({
 export function SummaryPieChart() {
   const { categories, transactions } = useTransactions()
 
-  console.log('transactions:', transactions)
-
   function getTotalAmountByCategory(category: string) {
     return transactions
       .filter((tr) => tr.type === 'withdraw' && tr.category === category)
       .reduce((acc, obj) => acc + obj.amount, 0)
   }
-
-  console.log('categorias:', categories)
 
   const COLORS = categories
     .filter((cat) => !!cat.name && getTotalAmountByCategory(cat.name) > 0)
@@ -74,11 +70,8 @@ export function SummaryPieChart() {
       return { name: cat.name, value: getTotalAmountByCategory(cat.name) }
     })
 
-  console.log('piechart data:', data)
-
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
-      console.log('PPPPP', payload[0])
       return (
         <StyledTooltip>
           <div className="tooltip-info">
