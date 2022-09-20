@@ -28,14 +28,14 @@ export function mirageServer() {
             amount: 12000,
             createdAt: new Date('2022-09-07 06:00:00'),
           },
-          {
-            id: 2,
-            title: 'Teste 2',
-            type: 'withdraw',
-            category: 'Pets',
-            amount: 500,
-            createdAt: new Date('2022-09-02 10:00:00'),
-          },
+          // {
+          //   id: 2,
+          //   title: 'Teste 2',
+          //   type: 'withdraw',
+          //   category: 'Pets',
+          //   amount: 500,
+          //   createdAt: new Date('2022-09-02 10:00:00'),
+          // },
           {
             id: 3,
             title: 'Teste 3',
@@ -121,38 +121,47 @@ export function mirageServer() {
           {
             id: 1,
             name: '',
+            color: '',
           },
           {
             id: 2,
             name: 'Alimentação',
+            color: '#FF3C26',
           },
           {
             id: 3,
             name: 'Academia',
+            color: '#69D959',
           },
           {
             id: 4,
             name: 'Saúde',
+            color: '#05A782',
           },
           {
             id: 5,
             name: 'Investimentos',
+            color: '#F2CE00',
           },
           {
             id: 6,
             name: 'Pets',
+            color: '#FF7C17',
           },
           {
             id: 7,
             name: 'Educação',
+            color: '#0071B7',
           },
           {
             id: 8,
             name: 'Transporte',
+            color: '#EFEAEA',
           },
           {
             id: 9,
             name: 'Extra',
+            color: '#C90132',
           },
         ],
       })
