@@ -40,6 +40,7 @@ interface Categories {
     | 'Educação'
     | 'Transporte'
     | 'Extra'
+  color: string
 }
 
 interface TransactionsProviderProps {

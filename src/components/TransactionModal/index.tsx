@@ -160,7 +160,6 @@ export function TransactionModal({
                   displayType="input"
                   onValueChange={(values, sourceInfo) => {
                     setValueInput(values.floatValue as number)
-                    console.log(values, sourceInfo)
                   }}
                 ></NumericFormat>
               </FloatingLabel>
