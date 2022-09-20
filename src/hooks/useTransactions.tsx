@@ -1,3 +1,4 @@
+import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore'
 import {
   createContext,
   ReactNode,
@@ -8,8 +9,10 @@ import {
 
 import { api } from '../services/api'
 
+import { db } from '../services/firebase'
+
 interface Transaction {
-  id: number
+  id: string
   title: string
   type: 'deposit' | 'withdraw'
   category:
@@ -26,10 +29,10 @@ interface Transaction {
   createdAt: Date
 }
 
-type TransactionInput = Omit<Transaction, 'createdAt' | 'id'>
+type TransactionInput = Omit<Transaction, 'id'>
 
 interface Categories {
-  id: number
+  id: string
   name:
     | ''
     | 'Alimentação'
@@ -61,24 +64,51 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [categories, setCategories] = useState<Categories[]>([])
 
   useEffect(() => {
-    const fetchData = async () => {
-      api
-        .get('transactions')
-        .then((response) => setTransactions(response.data.transactions))
+    const firebaseFetchTransactionsData = async () => {
+      const colRef = collection(db, 'transactions')
+      const q = query(colRef, orderBy('createdAt'))
+      onSnapshot(q, (snapshot) => {
+        const data = snapshot.docs.map((doc): Transaction => {
+          const { title, type, category, amount, createdAt } = doc.data()
 
-      api
-        .get('categories')
-        .then((response) => setCategories(response.data.categories))
+          return {
+            id: doc.id,
+            title,
+            type,
+            category,
+            amount,
+            createdAt,
+          }
+        })
+
+        setTransactions(data)
+      })
     }
 
-    fetchData()
+    const firebaseFetchCategoriesData = async () => {
+      const colRef = collection(db, 'categories')
+      const q = query(colRef, orderBy('name'))
+      onSnapshot(q, (snapshot) => {
+        const data = snapshot.docs.map((doc): Categories => {
+          const { name } = doc.data()
+
+          return {
+            id: doc.id,
+            name
+          }
+        })
+
+        setCategories(data)
+      })
+    }
+
+    firebaseFetchTransactionsData()
+    firebaseFetchCategoriesData()
   }, [])
 
   async function createTransaction(transactionInput: TransactionInput) {
-    const response = await api.post('/transactions', transactionInput)
-
-    const { transactions: transaction } = response.data
-    setTransactions(() => [...transactions, transaction])
+    const colRef = collection(db, 'transactions')
+    addDoc(colRef, transactionInput)
   }
 
   return (

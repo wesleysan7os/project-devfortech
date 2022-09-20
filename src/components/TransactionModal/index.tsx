@@ -76,6 +76,7 @@ export function TransactionModal({
         type: transactionType,
         category: categoryInput,
         amount: valueInput,
+        createdAt: new Date()
       })
       onClose()
       toast.success(
