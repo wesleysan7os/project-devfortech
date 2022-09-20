@@ -5,6 +5,7 @@ import { Container } from './styles'
 import { useTransactions } from '../../../hooks/useTransactions'
 import { logout } from '../../../services/firebase'
 import { HeaderProps } from '..'
+import { Loading } from '../../Loading/Loading'
 
 export function TransactionsSummary(props: HeaderProps) {
   const { transactions } = useTransactions()
@@ -36,7 +37,13 @@ export function TransactionsSummary(props: HeaderProps) {
           <h2>Olá 🤑</h2>
           <h4>
             {props.userName}
-            <a onClick={logout}><abbr title="Sair"><SignOut size={32} /></abbr></a>
+            <span onClick={logout}>
+              {props.userName ? (
+                <SignOut size={32} weight="thin" />
+              ) : (
+                <Loading />
+              )}
+            </span>
           </h4>
         </header>
         <section>

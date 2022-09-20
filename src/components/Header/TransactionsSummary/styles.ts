@@ -50,6 +50,10 @@ export const Container = styled.div`
       justify-content: space-between;
       font-weight: normal;
       font-size: 1.3rem;
+
+      span {
+        cursor: pointer;
+      }
     }
 
     section button {
