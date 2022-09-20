@@ -31,11 +31,11 @@ export function Home() {
 
   return (
     <>
-      <Header />
+      <Header userName={name}/>
       <div>
         <div>
           Logged in as
-          <div>{name}</div>
+          <div>{name} <span>x</span></div>
           <div>{user?.email}</div>
           <button className="dashboard__btn" onClick={logout}>
             Logout
