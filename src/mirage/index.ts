@@ -119,11 +119,6 @@ export function mirageServer() {
         ],
         categories: [
           {
-            id: 1,
-            name: '',
-            color: '',
-          },
-          {
             id: 2,
             name: 'Alimentação',
             color: '#FF3C26',
