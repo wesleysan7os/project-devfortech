@@ -5,6 +5,7 @@ import { query, collection, getDocs, where, onSnapshot, orderBy } from 'firebase
 import { auth, db, logout } from '../../services/firebase'
 import './Home.css'
 import { Header } from '../../components/Header'
+import { Main } from '../../components/Main'
 
 export function Home() {
   const [user, loading, error] = useAuthState(auth)
@@ -23,46 +24,16 @@ export function Home() {
     }
   }
 
-  const fetchTransactions = async () => {
-    // try {
-    //   const colRef = collection(db, 'transactions')
-    //   const q = query(colRef, orderBy('createdAt'));
-
-    //   onSnapshot(q, (snapshot) => {
-    //     let transactions: any = []
-    //     snapshot.docs.forEach((doc) => {
-    //       transactions.push({ ...doc.data(), id: doc.id })
-    //     })
-    //     console.log(transactions)
-    //   })
-    // } catch (err) {
-    //   console.error(err)
-    //   alert('An error occured while fetching user data')
-    // }
-  }
-
   useEffect(() => {
     if (loading) return
     if (!user) return navigate('/')
     fetchUserName()
-    fetchTransactions()
   }, [user, loading])
 
   return (
     <>
       <Header userName={name} />
-      <div>
-        <div>
-          Logged in as
-          <div>
-            {name} <span>x</span>
-          </div>
-          <div>{user?.email}</div>
-          <button className="dashboard__btn" onClick={logout}>
-            Logout
-          </button>
-        </div>
-      </div>
+      <Main />
     </>
   )
 }
