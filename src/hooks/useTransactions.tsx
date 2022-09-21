@@ -26,7 +26,7 @@ interface Transaction {
   createdAt: Date
 }
 
-type TransactionInput = Omit<Transaction, 'createdAt' | 'id'>
+type TransactionInput = Omit<Transaction, 'id'>
 
 interface Categories {
   id: number
