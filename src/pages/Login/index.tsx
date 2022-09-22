@@ -1,13 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { Link, useNavigate } from 'react-router-dom'
-import { auth, logInWithEmailAndPassword, signInWithGoogle, } from '../../services/firebase'
+import {
+  auth,
+  logInWithEmailAndPassword,
+  signInWithGoogle,
+} from '../../services/firebase'
 import { Form, Button } from 'react-bootstrap'
 import Lottie from 'react-lottie'
+import { Envelope } from 'phosphor-react'
 
 import { StyledHeader, StyledContainer } from './styles'
 import animationData from '../../assets/lotties/finance.json'
-import googleLogo from '../../assets/img/google-logo.png'
+import imgGoogle from '../../assets/img/google-logo.png'
+import imgBusinessman from '../../assets/img/finance.svg'
+import imgGamaAcademy from '../../assets/img/logo-gama-academy.png'
+import imgGamaLogo from '../../assets/img/logo-gama.png'
 
 export function Login() {
   const [email, setEmail] = useState('')
@@ -22,28 +30,30 @@ export function Login() {
     }
     if (user) navigate('/home')
   }, [user, loading])
-  
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
     animationData: animationData,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
+      preserveAspectRatio: 'xMidYMid slice',
+    },
   }
   return (
     <StyledContainer>
       <header>
-        Logo
+        <img src={imgGamaLogo} width="62px" alt="logo-gama" />{' '}
+        <h1>GamaFinancyApp</h1>
       </header>
 
       <main>
         <aside>
-        <Lottie 
-          options={defaultOptions}
-          height={400}
-          width={400}
-        />
+          {/* <Lottie 
+            options={defaultOptions}
+            height={400}
+            width={400}
+          /> */}
+          <img src={imgBusinessman} alt="logo-google" />
         </aside>
 
         <section>
@@ -55,9 +65,6 @@ export function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <Form.Text className="text-muted">
-              Nunca compartilharemos seu e-mail com mais ninguém.
-            </Form.Text>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -71,31 +78,38 @@ export function Login() {
           </Form.Group>
 
           <Button
-            variant="primary"
+            variant="success"
             onClick={() => logInWithEmailAndPassword(email, password)}
           >
+            <Envelope size={24} />
             Login com e-mail
           </Button>
-
+          <span>Ou</span>
           <Button variant="outline-danger" onClick={signInWithGoogle}>
-            <img
-              src={googleLogo}
-              alt="logo-google"
-              width="24px"
-            />{' '}
+            <img src={imgGoogle} alt="logo-google" width="24px" />
             Login com Google
           </Button>
           <div>
-            <Link to="/reset">Esqueceu a senha?</Link>
+            <Link to="/reset">Redefinir senha</Link>
           </div>
           <div>
-            Não tem uma conta? <Link to="/register">Criar conta</Link>.
+            <Link to="/register">Criar conta</Link>
           </div>
         </section>
       </main>
-      
+
       <footer>
-       Developed by ✋ Athos Gabriel ✋ Bruno Sobral ✋ Wesley Santos
+        Developed by{' '}
+        <a href="www.google.com" target="_blank">
+          ✋ Athos Gabriel
+        </a>{' '}
+        <a href="www.google.com" target="_blank">
+          ✋ Bruno Sobral
+        </a>{' '}
+        <a href="www.google.com" target="_blank">
+          ✋ Wesley Santos
+        </a>
+        {/* <img src={imgGamaAcademy} alt="logo-gama-academy" /> */}
       </footer>
     </StyledContainer>
   )

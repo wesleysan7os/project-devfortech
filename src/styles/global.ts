@@ -36,6 +36,11 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 500;
   }
 
+  a {
+    text-decoration: none;
+    color: var(--text);
+  }
+
   button{
     cursor: pointer;
   }
