@@ -58,8 +58,6 @@ export function FullReport() {
   useEffect(() => {
     let tempTransactions = transactions
 
-    console.log(dateFilter)
-
     if (typeFilter === 1) {
       tempTransactions = tempTransactions.filter(
         (transaction) => transaction.type === 'deposit',
@@ -197,7 +195,7 @@ export function FullReport() {
 
           <div className="filter-container">
             <Form.Group className="filter-option">
-              <FloatingLabel controlId="type-filter" label="Filtrar por tipo">
+              <FloatingLabel controlId="type-filter" label="Tipo">
                 <Form.Select
                   aria-label="type filter options"
                   ref={typeFilterRef}
@@ -210,10 +208,7 @@ export function FullReport() {
               </FloatingLabel>
             </Form.Group>
             <Form.Group className="filter-option">
-              <FloatingLabel
-                controlId="category-filter"
-                label="Filtrar por categoria"
-              >
+              <FloatingLabel controlId="category-filter" label="Categoria">
                 <Form.Select
                   aria-label="category filter options"
                   ref={categoryFilterRef}
@@ -230,7 +225,7 @@ export function FullReport() {
               </FloatingLabel>
             </Form.Group>
             <Form.Group className="filter-option">
-              <FloatingLabel controlId="date-filter" label="Filtrar por Data">
+              <FloatingLabel controlId="date-filter" label="Data">
                 <Form.Control
                   aria-label="date filter options"
                   type="date"
@@ -240,10 +235,7 @@ export function FullReport() {
               </FloatingLabel>
             </Form.Group>
             <Form.Group className="filter-option">
-              <FloatingLabel
-                label="Filtrar por Título"
-                controlId="title-filter"
-              >
+              <FloatingLabel label="Título" controlId="title-filter">
                 <Form.Control
                   type="text"
                   placeholder="Título da transação"
