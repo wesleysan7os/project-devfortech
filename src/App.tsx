@@ -1,15 +1,22 @@
+import { TransactionsProvider } from './hooks/useTransactions'
 import { Header } from './components/Header'
 import { Main } from './components/Main'
-import { TransactionsProvider } from './hooks/useTransactions'
 import { GlobalStyle } from './styles/global'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { GridContainer } from './style'
 
 export function App() {
   return (
     <TransactionsProvider>
-      <Header />
-      <Main />
+      <GridContainer>
+        <div className="header">
+          <Header />
+        </div>
+        <div className="main">
+          <Main />
+        </div>
+      </GridContainer>
       <GlobalStyle />
       <ToastContainer
         position="top-right"

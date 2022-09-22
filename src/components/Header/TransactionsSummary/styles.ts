@@ -14,12 +14,12 @@ export const Container = styled.div`
   .summary {
     grid-area: summary;
   }
-  
+
   .income {
     grid-area: income;
 
     span {
-      color: #69D959;
+      color: #69d959;
     }
   }
 
@@ -27,7 +27,7 @@ export const Container = styled.div`
     grid-area: outcome;
 
     span {
-      color: #FF3C26;
+      color: #ff3c26;
     }
   }
 
@@ -54,7 +54,7 @@ export const Container = styled.div`
 
     section button {
       background-color: transparent;
-      color: #F5F5F5;
+      color: #f5f5f5;
       border: none;
     }
   }
@@ -85,7 +85,7 @@ export const Container = styled.div`
     span {
       font-size: 1.4rem;
       font-weight: 500;
-      white-space:nowrap;
+      white-space: nowrap;
     }
   }
 
@@ -95,5 +95,4 @@ export const Container = styled.div`
     flex-direction: column;
     justify-content: center;
   }
-
 `

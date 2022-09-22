@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.section`
-  color: #F5F5F5;
+  color: #f5f5f5;
   background-color: #222;
   border-radius: 0.5rem;
 
@@ -12,12 +12,12 @@ export const Container = styled.section`
     background-color: #414141;
     margin: 0.6rem 0.7rem;
   }
-  
+
   ul {
     font-size: 1.2rem;
     list-style-type: none;
     padding-left: 0;
-    
+
     li {
       display: flex;
       align-items: center;
@@ -29,6 +29,10 @@ export const Container = styled.section`
 
       span {
         margin-left: 1rem;
+      }
+
+      @media (max-width: 550px) {
+        padding: 0.5rem 2rem;
       }
     }
   }
