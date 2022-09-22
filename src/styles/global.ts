@@ -20,11 +20,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body{
-    /* background: var(--background); */
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url('https://wallpaperaccess.com/full/2927307.jpg');
-    //'https://wallpaperaccess.com/full/2927307.jpg'
+    opacity: 0.9;
+    background-image: radial-gradient(#242424 2px, #121212 2px);
+    background-size: 40px 40px;
    
-    background-size: cover;
+    /* background-size: cover; */
     -webkit-font-smoothing: antialiased;
   }
 

@@ -56,6 +56,10 @@ export const SummaryPieChartContainer = styled.div`
       padding: 0.3rem;
     }
   }
+
+  @media (max-width: 550px) {
+    display: none;
+  }
 `
 
 export const StyledTooltip = styled.div`

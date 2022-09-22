@@ -4,7 +4,7 @@ export const Container = styled.main`
   display: grid;
   grid-template-columns: 2fr 1fr;
   column-gap: 0.4rem;
-  max-width: 1400px;
+  max-width: 1200px;
   min-height: 500px;
   margin: 0.5rem auto;
 
@@ -14,6 +14,7 @@ export const Container = styled.main`
     color: #f5f5f5;
     border: 1px solid #565656;
     background-color: #414141;
+    font-size: 1rem;
   }
 
   .report-container {
