@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Login } from "./pages/Login"
-import Register from "./pages/Register"
+import { Register } from "./pages/Register"
 import { Reset } from "./pages/Reset"
 import { Home } from "./pages/Home"
 

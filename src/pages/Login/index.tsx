@@ -7,14 +7,13 @@ import {
   signInWithGoogle,
 } from '../../services/firebase'
 import { Form, Button } from 'react-bootstrap'
-import Lottie from 'react-lottie'
 import { Envelope } from 'phosphor-react'
 
-import { StyledHeader, StyledContainer } from './styles'
-import animationData from '../../assets/lotties/finance.json'
+import { StyledContainer } from './styles'
 import imgGoogle from '../../assets/img/google-logo.png'
 import imgBusinessman from '../../assets/img/finance.svg'
 import imgGamaLogo from '../../assets/img/logo-gama.png'
+import { toast } from 'react-toastify'
 
 export function Login() {
   const [email, setEmail] = useState('')
@@ -22,6 +21,11 @@ export function Login() {
   const [user, loading, error] = useAuthState(auth)
   const navigate = useNavigate()
 
+  function login() {
+    if (!email) toast.warning('Por favor, informe um email.')
+    if (!password) toast.warning('Por favor, informe uma senha.')
+    logInWithEmailAndPassword(email, password)
+  }
   useEffect(() => {
     if (loading) {
       // maybe trigger a loading screen
@@ -30,14 +34,6 @@ export function Login() {
     if (user) navigate('/home')
   }, [user, loading])
 
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
-  }
   return (
     <StyledContainer>
       <header>
@@ -76,10 +72,7 @@ export function Login() {
             />
           </Form.Group>
 
-          <Button
-            variant="success"
-            onClick={() => logInWithEmailAndPassword(email, password)}
-          >
+          <Button variant="success" onClick={login}>
             <Envelope size={24} />
             Login com e-mail
           </Button>

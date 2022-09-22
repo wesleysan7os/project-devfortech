@@ -49,8 +49,6 @@ const signInWithGoogle = async () => {
       })
     }
   } catch (err: any) {
-    console.error(err)
-    alert(err.message)
   }
 }
 
@@ -58,8 +56,6 @@ const logInWithEmailAndPassword = async (email: any, password: any) => {
   try {
     await signInWithEmailAndPassword(auth, email, password)
   } catch (err: any) {
-    console.error(err)
-    alert(err.message)
   }
 }
 
@@ -79,8 +75,6 @@ const registerWithEmailAndPassword = async (
       email,
     })
   } catch (err: any) {
-    console.error(err)
-    alert(err.message)
   }
 }
 

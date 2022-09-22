@@ -38,7 +38,11 @@ export const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
-    color: var(--text);
+    color: #157347;
+  }
+
+  a:hover {
+      opacity: 0.8;
   }
 
   button{

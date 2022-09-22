@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 
-export const StyledHeader = styled.header``
-
 export const StyledContainer = styled.div`
   background-color: #2f2f33;
   width: 100vw;
@@ -12,6 +10,7 @@ export const StyledContainer = styled.div`
 
   justify-content: space-between;
   padding: 20px;
+
   header {
     display: flex;
     gap: 1rem;
@@ -43,10 +42,6 @@ export const StyledContainer = styled.div`
         align-items: center;
         justify-content: center;
         gap: 0.3rem;
-      }
-
-      a {
-        color: #157347;
       }
 
       @media (max-width: 900px) {
