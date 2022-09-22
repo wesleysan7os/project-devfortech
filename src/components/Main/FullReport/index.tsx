@@ -180,7 +180,6 @@ export function FullReport() {
     setDisplayConfirmationModal(false)
   }
 
-  console.log('transaçoes:', transactions)
   return (
     <>
       <ConfirmDeleteModal

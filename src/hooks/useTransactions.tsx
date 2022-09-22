@@ -65,13 +65,9 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      api
-        .get('transactions')
-        .then((response) => setTransactions(response.data.transactions))
+      api.get('transactions').then((response) => setTransactions(response.data))
 
-      api
-        .get('categories')
-        .then((response) => setCategories(response.data.categories))
+      api.get('categories').then((response) => setCategories(response.data))
     }
 
     fetchData()
@@ -86,11 +82,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   async function deleteTransaction(transactionId: number) {
     const deletedTransaction = transactions.find((tr) => tr.id == transactionId)
 
-    console.log(deletedTransaction)
-
     const response = await api.delete(`/transactions/${transactionId}`)
-
-    console.log('RESPOSTA:', response)
 
     const transactionsAfterDelete = transactions.filter((transaction) => {
       return transaction.id != transactionId

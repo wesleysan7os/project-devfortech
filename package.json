@@ -9,7 +9,6 @@
     "@types/react-bootstrap": "^0.32.30",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
-    "miragejs": "^0.1.45",
     "phosphor-react": "^1.4.1",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
