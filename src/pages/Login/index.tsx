@@ -14,26 +14,29 @@ import imgGoogle from '../../assets/img/google-logo.png'
 import imgBusinessman from '../../assets/img/finance.svg'
 import imgGamaLogo from '../../assets/img/logo-gama.png'
 import { toast } from 'react-toastify'
+import { Loading } from '../../components/Loading/Loading'
 
 export function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [user, loading, error] = useAuthState(auth)
   const navigate = useNavigate()
 
   function login() {
-    if (!email) toast.warning('Por favor, informe um email.')
-    if (!password) toast.warning('Por favor, informe uma senha.')
+    if (!email) return toast.warning('Por favor, informe um email.')
+    if (!password) return toast.warning('Por favor, informe uma senha.')
+    setIsLoading(true)
     logInWithEmailAndPassword(email, password)
   }
   useEffect(() => {
     if (loading) {
-      // maybe trigger a loading screen
+      // criar tela de carregamento.
       return
     }
     if (user) navigate('/home')
   }, [user, loading])
-
+  
   return (
     <StyledContainer>
       <header>
@@ -71,10 +74,10 @@ export function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-
-          <Button variant="success" onClick={login}>
-            <Envelope size={24} />
-            Login com e-mail
+          
+          <Button variant="success" onClick={login} disabled={ isLoading ? 'disabled' : ''}>
+            
+            {isLoading ? <Loading /> : <><Envelope size={24} />Login com e-mail</>}
           </Button>
           <span>Ou</span>
           <Button variant="outline-danger" onClick={signInWithGoogle}>

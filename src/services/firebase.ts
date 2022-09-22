@@ -15,8 +15,9 @@ import {
   collection,
   where,
   addDoc,
-  onSnapshot
+  onSnapshot,
 } from 'firebase/firestore'
+import { toast } from 'react-toastify'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCPv4QqvwtvBsCZsMECN0jsWdMGpKDaesA',
@@ -48,15 +49,13 @@ const signInWithGoogle = async () => {
         email: user.email,
       })
     }
-  } catch (err: any) {
-  }
+  } catch (err: any) {}
 }
 
 const logInWithEmailAndPassword = async (email: any, password: any) => {
   try {
     await signInWithEmailAndPassword(auth, email, password)
-  } catch (err: any) {
-  }
+  } catch (err: any) {}
 }
 
 // Registrar
@@ -74,7 +73,19 @@ const registerWithEmailAndPassword = async (
       authProvider: 'local',
       email,
     })
+    toast.success('Cadastrado com sucesso.')
   } catch (err: any) {
+    if (err.code === 'auth/email-already-in-use') {
+      return toast.error('E-mail já cadastrado.')
+    }
+    if (err.code === 'auth/invalid-email') {
+      return toast.error('E-mail inválido.')
+    }
+
+    if (err.code === 'auth/wrong-password') {
+      return toast.error('E-mail ou senha inválido.')
+    }
+    console.log(err)
   }
 }
 
@@ -82,10 +93,13 @@ const registerWithEmailAndPassword = async (
 const sendPasswordReset = async (email: any) => {
   try {
     await sendPasswordResetEmail(auth, email)
-    alert('Link de redefinição de senha enviado!')
+    toast.success('Link de redefinição de senha enviado!')
   } catch (err: any) {
     console.error(err)
-    alert('mensagem de erro')
+    toast.warning(err)
+    if (err.code === 'auth/invalid-email') {
+      return toast.error('E-mail inválido.')
+    }
   }
 }
 

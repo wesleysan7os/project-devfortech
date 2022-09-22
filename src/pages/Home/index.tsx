@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useNavigate } from 'react-router-dom'
-import { query, collection, getDocs, where, onSnapshot, orderBy } from 'firebase/firestore'
+import {
+  query,
+  collection,
+  getDocs,
+  where,
+  onSnapshot,
+  orderBy,
+} from 'firebase/firestore'
 import { auth, db, logout } from '../../services/firebase'
-import './Home.css'
 import { Header } from '../../components/Header'
 import { Main } from '../../components/Main'
 
