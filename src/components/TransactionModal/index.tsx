@@ -9,7 +9,11 @@ import {
 } from 'react-bootstrap'
 
 import { Container, ErrorSpan } from './styles'
-import { isCategoryValid, isTitleValid, isValueValid } from './validations'
+import {
+  isCategoryValid,
+  isTitleValid,
+  isValueValid,
+} from '../../utils/validations'
 import { toast } from 'react-toastify'
 import { NumericFormat } from 'react-number-format'
 import { useTransactions } from '../../hooks/useTransactions'
@@ -38,8 +42,6 @@ export function TransactionModal({
 }: ModalProps) {
   const { categories, createTransaction } = useTransactions()
 
-  const [isTransactionDataValid, setIsTransactionDataValid] = useState(false)
-
   const [titleInput, setTitleInput] = useState('')
   const [valueInput, setValueInput] = useState(0)
   const [categoryInput, setCategoryInput] = useState<CategorysType>('')
@@ -50,6 +52,7 @@ export function TransactionModal({
   const [categoryError, setCategoryError] = useState(false)
 
   let formRef = useRef<HTMLFormElement>()
+  let dateInputRef = useRef<HTMLInputElement>(null)
 
   function isModalDataValid(): boolean {
     isTitleValid(titleInput) ? setTitleError(false) : setTitleError(true)
@@ -60,11 +63,15 @@ export function TransactionModal({
       ? setCategoryError(false)
       : setCategoryError(true)
 
-    setIsTransactionDataValid(
-      () => !titleError && !valueError && !categoryError,
-    )
+    if (
+      isTitleValid(titleInput) &&
+      isValueValid(valueInput) &&
+      isCategoryValid(categoryInput)
+    ) {
+      return true
+    }
 
-    return isTransactionDataValid
+    return false
   }
 
   function handleSubmit(event: FormEvent) {
@@ -76,6 +83,7 @@ export function TransactionModal({
         type: transactionType,
         category: categoryInput,
         amount: valueInput,
+        createdAt: dateInput,
       })
       onClose()
       toast.success(
@@ -86,12 +94,17 @@ export function TransactionModal({
     }
   }
 
+  function loadTodaysDate() {
+    dateInputRef!.current!.value = getTodayDate()
+  }
+
   function handleExited() {
     setTitleInput('')
     setValueInput(0)
     setCategoryInput('')
     setTitleError(false)
     setValueError(false)
+    setCategoryError(false)
   }
 
   function getTodayDate() {
@@ -106,6 +119,7 @@ export function TransactionModal({
       ref={formRef}
       show={show}
       onHide={onClose}
+      onEnter={loadTodaysDate}
       onExited={handleExited}
       centered
       dialogClassName="modal-90w"
@@ -141,7 +155,12 @@ export function TransactionModal({
                   placeholder="Título da transação"
                   maxLength={30}
                   value={titleInput}
-                  onChange={(e) => setTitleInput(e.target.value)}
+                  onChange={(e) => {
+                    setTitleInput(e.target.value)
+                    isTitleValid(titleInput)
+                      ? setTitleError(false)
+                      : setTitleError(true)
+                  }}
                 />
               </FloatingLabel>
               <ErrorSpan>{titleError && stringObligatoryField}</ErrorSpan>
@@ -160,6 +179,9 @@ export function TransactionModal({
                   displayType="input"
                   onValueChange={(values, sourceInfo) => {
                     setValueInput(values.floatValue as number)
+                    isValueValid(valueInput)
+                      ? setValueError(false)
+                      : setValueError(true)
                   }}
                 ></NumericFormat>
               </FloatingLabel>
@@ -173,9 +195,10 @@ export function TransactionModal({
                 label="Selecione a categoria"
               >
                 <Form.Select
-                  onChange={(e) =>
+                  onChange={(e) => {
                     setCategoryInput(e.target.value as CategorysType)
-                  }
+                    setCategoryError(false)
+                  }}
                   aria-label="category's options"
                   value={categoryInput}
                 >
@@ -193,9 +216,11 @@ export function TransactionModal({
             <Form.Group className="mb-5">
               <FloatingLabel controlId="floatingDate" label="Data">
                 <Form.Control
+                  onChange={(e) => setDateInput(new Date(e.target.value))}
                   aria-label="Data"
                   type="date"
                   max={getTodayDate()}
+                  ref={dateInputRef}
                 />
               </FloatingLabel>
             </Form.Group>
