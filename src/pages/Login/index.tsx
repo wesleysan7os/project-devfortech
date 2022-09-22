@@ -14,7 +14,6 @@ import { StyledHeader, StyledContainer } from './styles'
 import animationData from '../../assets/lotties/finance.json'
 import imgGoogle from '../../assets/img/google-logo.png'
 import imgBusinessman from '../../assets/img/finance.svg'
-import imgGamaAcademy from '../../assets/img/logo-gama-academy.png'
 import imgGamaLogo from '../../assets/img/logo-gama.png'
 
 export function Login() {
