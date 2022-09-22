@@ -5,10 +5,11 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { toast } from 'react-toastify'
 
 import { api } from '../services/api'
 
-interface Transaction {
+export interface Transaction {
   id: number
   title: string
   type: 'deposit' | 'withdraw'
@@ -51,6 +52,7 @@ interface TransactionsContextData {
   transactions: Transaction[]
   categories: Categories[]
   createTransaction: (transactionInput: TransactionInput) => Promise<void>
+  deleteTransaction: (transactionId: number) => Promise<void>
 }
 
 export const TransactionsContext = createContext<TransactionsContextData>(
@@ -81,10 +83,31 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     const { transactions: transaction } = response.data
     setTransactions(() => [...transactions, transaction])
   }
+  async function deleteTransaction(transactionId: number) {
+    const deletedTransaction = transactions.find((tr) => tr.id == transactionId)
+
+    console.log(deletedTransaction)
+
+    const response = await api.delete(`/transactions/${transactionId}`)
+
+    console.log('RESPOSTA:', response)
+
+    const transactionsAfterDelete = transactions.filter((transaction) => {
+      return transaction.id != transactionId
+    })
+
+    setTransactions(transactionsAfterDelete)
+
+    toast.success(
+      `${deletedTransaction!.type === 'deposit' ? 'Receita' : 'Despesa'} "${
+        deletedTransaction!.title
+      }" foi excluída.`,
+    )
+  }
 
   return (
     <TransactionsContext.Provider
-      value={{ transactions, categories, createTransaction }}
+      value={{ transactions, categories, createTransaction, deleteTransaction }}
     >
       {children}
     </TransactionsContext.Provider>
