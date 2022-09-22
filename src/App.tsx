@@ -1,15 +1,13 @@
-import { Header } from './components/Header'
-import { Main } from './components/Main'
 import { TransactionsProvider } from './hooks/useTransactions'
 import { GlobalStyle } from './styles/global'
 import { ToastContainer } from 'react-toastify'
+import { AppRoutes } from './routes'
 import 'react-toastify/dist/ReactToastify.css'
 
 export function App() {
   return (
     <TransactionsProvider>
-      <Header />
-      <Main />
+      <AppRoutes />
       <GlobalStyle />
       <ToastContainer
         position="top-right"

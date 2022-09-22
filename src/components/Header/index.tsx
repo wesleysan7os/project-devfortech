@@ -3,11 +3,15 @@ import { TransactionsSummary } from './TransactionsSummary'
 import { LineChartTotal } from './LineChart'
 import { StyledHeader } from './styles'
 
-export function Header() {
+export type HeaderProps = {
+  userName: string,
+}
+
+export function Header(props: HeaderProps) {
   return (
     <StyledHeader>
       <div className="transactions-summary">
-        <TransactionsSummary />
+        <TransactionsSummary userName={props.userName}/>
       </div>
       <div className="transaction-modal">
         <AddTransactionsArea />
