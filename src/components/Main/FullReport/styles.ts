@@ -86,6 +86,9 @@ export const Container = styled.main`
 
   li .transaction-title {
     width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   li .secondary {

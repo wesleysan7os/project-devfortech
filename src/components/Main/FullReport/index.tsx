@@ -12,7 +12,7 @@ import {
   TrendUp,
   X,
 } from 'phosphor-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   Button,
   OverlayTrigger,
@@ -20,8 +20,12 @@ import {
   Form,
   FloatingLabel,
 } from 'react-bootstrap'
+import { toast } from 'react-toastify'
 
 import { Transaction, useTransactions } from '../../../hooks/useTransactions'
+import { formatDate } from '../../../utils/generalFunctions'
+import { ConfirmDeleteModal } from '../../ConfirmDeleteModal'
+import { StackedBarchart } from '../../StackedBarchart'
 import { Container } from './styles'
 
 export function FullReport() {
@@ -35,6 +39,17 @@ export function FullReport() {
   const [categoryFilter, setCategoryFilter] = useState<string>('all')
   const [dateFilter, setDateFilter] = useState<boolean | string>('')
   const [titleFilter, setTitleFilter] = useState<boolean | string>(false)
+
+  const [displayConfirmationModal, setDisplayConfirmationModal] =
+    useState(false)
+
+  const [transactionToBeDeleted, setTransactionToBeDeleted] =
+    useState<Transaction | null>(null)
+
+  let typeFilterRef = useRef<HTMLSelectElement>(null)
+  let categoryFilterRef = useRef<HTMLSelectElement>(null)
+  let dateFilterRef = useRef<HTMLInputElement>(null)
+  let titleFilterRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     setFilteredTransactions(transactions)
@@ -86,10 +101,15 @@ export function FullReport() {
   }, [typeFilter, categoryFilter, dateFilter, titleFilter])
 
   function clearFilters() {
+    toast.success('Filtro limpo. Exibindo todas as transações.')
     setTypeFilter(false)
     setCategoryFilter('all')
     setDateFilter('')
     setTitleFilter(false)
+    typeFilterRef.current!.value = '0'
+    categoryFilterRef.current!.value = 'all'
+    dateFilterRef.current!.value = ''
+    titleFilterRef.current!.value = ''
   }
 
   const delayShow = 1000
@@ -105,10 +125,6 @@ export function FullReport() {
       style: 'currency',
       currency: 'BRL',
     }).format(expense)
-  }
-
-  function formatDate(date: Date) {
-    return new Date(date).toLocaleDateString('pt-BR')
   }
 
   const categoryIconProps = {
@@ -156,152 +172,178 @@ export function FullReport() {
     }
   }
 
+  function openConfirmationModalHandler(transaction: Transaction) {
+    setTransactionToBeDeleted(transaction)
+    setDisplayConfirmationModal(true)
+  }
+
+  function deleteTransactionHandler(transactionId: number | string) {
+    deleteTransaction(Number(transactionId))
+    setDisplayConfirmationModal(false)
+  }
+
   console.log('transaçoes:', transactions)
   return (
-    <Container>
-      <div className="report-container">
-        <h5>Relatório Completo de Transações</h5>
+    <>
+      <ConfirmDeleteModal
+        show={displayConfirmationModal}
+        transaction={transactionToBeDeleted}
+        onHide={() => setDisplayConfirmationModal(false)}
+        onConfirmDelete={deleteTransactionHandler}
+      />
+      <Container>
+        <div className="report-container">
+          <h5>Relatório Completo de Movimentações</h5>
 
-        <div className="filter-container">
-          <Form.Group className="filter-option">
-            <FloatingLabel controlId="floatingSelect" label="Filtrar por tipo">
-              <Form.Select
-                aria-label="category's options"
-                onChange={(e) => setTypeFilter(Number(e.target.value))}
+          <div className="filter-container">
+            <Form.Group className="filter-option">
+              <FloatingLabel controlId="type-filter" label="Filtrar por tipo">
+                <Form.Select
+                  aria-label="type filter options"
+                  ref={typeFilterRef}
+                  onChange={(e) => setTypeFilter(Number(e.target.value))}
+                >
+                  <option value={0}>Todos</option>
+                  <option value={1}>Receitas</option>
+                  <option value={2}>Despesas</option>
+                </Form.Select>
+              </FloatingLabel>
+            </Form.Group>
+            <Form.Group className="filter-option">
+              <FloatingLabel
+                controlId="category-filter"
+                label="Filtrar por categoria"
               >
-                <option value={0}>Todos</option>
-                <option value={1}>Receitas</option>
-                <option value={2}>Despesas</option>
-              </Form.Select>
-            </FloatingLabel>
-          </Form.Group>
-          <Form.Group className="filter-option">
-            <FloatingLabel
-              controlId="floatingSelect"
-              label="Filtrar por categoria"
-            >
-              <Form.Select
-                aria-label="category's options"
-                onChange={(e) => setCategoryFilter(e.target.value)}
+                <Form.Select
+                  aria-label="category filter options"
+                  ref={categoryFilterRef}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                >
+                  <option value={'all'}>Todos</option>
+                  {categories &&
+                    categories.map((category) => (
+                      <option value={category.name} key={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                </Form.Select>
+              </FloatingLabel>
+            </Form.Group>
+            <Form.Group className="filter-option">
+              <FloatingLabel controlId="date-filter" label="Filtrar por Data">
+                <Form.Control
+                  aria-label="date filter options"
+                  type="date"
+                  ref={dateFilterRef}
+                  onChange={(e) => setDateFilter(e.target.value)}
+                />
+              </FloatingLabel>
+            </Form.Group>
+            <Form.Group className="filter-option">
+              <FloatingLabel
+                label="Filtrar por Título"
+                controlId="title-filter"
               >
-                <option value={'all'}>Todos</option>
-                {categories &&
-                  categories.map((category) => (
-                    <option value={category.name} key={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-              </Form.Select>
-            </FloatingLabel>
-          </Form.Group>
-          <Form.Group className="filter-option">
-            <FloatingLabel controlId="floatingDate" label="Filtrar por Data">
-              <Form.Control
-                aria-label="Filtrar por Data"
-                type="date"
-                onChange={(e) => setDateFilter(e.target.value)}
-              />
-            </FloatingLabel>
-          </Form.Group>
-          <Form.Group className="filter-option">
-            <FloatingLabel
-              label="Filtrar por Título"
-              controlId="formBasicTitle"
+                <Form.Control
+                  type="text"
+                  placeholder="Título da transação"
+                  maxLength={30}
+                  ref={titleFilterRef}
+                  onChange={(e) => setTitleFilter(e.target.value)}
+                />
+              </FloatingLabel>
+            </Form.Group>
+            <OverlayTrigger
+              placement={'top'}
+              delay={{
+                show: delayShow,
+                hide: delayHide,
+              }}
+              overlay={renderTooltip('Limpar filtros')}
             >
-              <Form.Control
-                type="text"
-                placeholder="Título da transação"
-                maxLength={30}
-                onChange={(e) => setTitleFilter(e.target.value)}
-              />
-            </FloatingLabel>
-          </Form.Group>
-          <OverlayTrigger
-            placement={'top'}
-            delay={{
-              show: delayShow,
-              hide: delayHide,
-            }}
-            overlay={renderTooltip('Limpar filtros')}
-          >
-            <Button variant="outline-danger" onClick={clearFilters}>
-              <Eraser size={32} />
-            </Button>
-          </OverlayTrigger>
-        </div>
-        <ul className="list">
-          {filteredTransactions.length > 0 ? (
-            filteredTransactions.map((transaction) => (
-              <li key={transaction.id}>
-                <span className="info-value secondary">
-                  {getCategoryIcon(transaction.category)}
-                  {transaction.category}
-                </span>
-                <span className="info-value transaction-title">
-                  {transaction.title}
-                </span>
-                <span className="info-value primary">
-                  {getTransactionTypeIcon(transaction.type)}{' '}
-                  {format(transaction.amount)}
-                </span>
-                <span className="info-value secondary date">
-                  {formatDate(transaction.createdAt)}
-                </span>
+              <Button variant="outline-danger" onClick={clearFilters}>
+                <Eraser size={32} />
+              </Button>
+            </OverlayTrigger>
+          </div>
+          <ul className="list">
+            {filteredTransactions.length > 0 ? (
+              filteredTransactions.map((transaction) => (
+                <li key={transaction.id}>
+                  <span className="info-value secondary">
+                    {getCategoryIcon(transaction.category)}
+                    {transaction.category}
+                  </span>
+                  <span className="info-value transaction-title">
+                    {transaction.title}
+                  </span>
+                  <span className="info-value primary">
+                    {getTransactionTypeIcon(transaction.type)}{' '}
+                    {format(transaction.amount)}
+                  </span>
+                  <span className="info-value secondary date">
+                    {formatDate(transaction.createdAt)}
+                  </span>
 
-                <div className="actions">
-                  <OverlayTrigger
-                    placement={'top'}
-                    delay={{
-                      show: delayShow,
-                      hide: delayHide,
-                    }}
-                    overlay={renderTooltip(
-                      `Editar ${
-                        transaction.type === 'withdraw' ? 'despesa' : 'receita'
-                      } '${transaction.title}'`,
-                    )}
-                  >
-                    <Button variant="link">
-                      <PencilSimpleLine
-                        size={18}
-                        weight={'thin'}
-                        color={'#90EE90'}
-                      />
-                    </Button>
-                  </OverlayTrigger>
-                  <OverlayTrigger
-                    placement={'top'}
-                    delay={{
-                      show: delayShow,
-                      hide: delayHide,
-                    }}
-                    overlay={renderTooltip(
-                      `Excluir ${
-                        transaction.type === 'withdraw' ? 'despesa' : 'receita'
-                      } '${transaction.title}'`,
-                    )}
-                  >
-                    <Button
-                      variant="link"
-                      onClick={() => {
-                        console.log('ID TRANSACTION:', transaction.id)
-                        deleteTransaction(Number(transaction.id))
+                  <div className="actions">
+                    <OverlayTrigger
+                      placement={'top'}
+                      delay={{
+                        show: delayShow,
+                        hide: delayHide,
                       }}
+                      overlay={renderTooltip(
+                        `Editar ${
+                          transaction.type === 'withdraw'
+                            ? 'despesa'
+                            : 'receita'
+                        } '${transaction.title}'`,
+                      )}
                     >
-                      <X size={18} color={'tomato'} />
-                    </Button>
-                  </OverlayTrigger>
-                </div>
-              </li>
-            ))
-          ) : (
-            <span>
-              Nenhuma transação encontrada. Adicione uma nova despesa/receita ou
-              mude os filtros aplicados.
-            </span>
-          )}
-        </ul>
-      </div>
-    </Container>
+                      <Button variant="link">
+                        <PencilSimpleLine
+                          size={18}
+                          weight={'thin'}
+                          color={'#90EE90'}
+                        />
+                      </Button>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                      placement={'top'}
+                      delay={{
+                        show: delayShow,
+                        hide: delayHide,
+                      }}
+                      overlay={renderTooltip(
+                        `Excluir ${
+                          transaction.type === 'withdraw'
+                            ? 'despesa'
+                            : 'receita'
+                        } '${transaction.title}'`,
+                      )}
+                    >
+                      <Button
+                        variant="link"
+                        onClick={() => {
+                          openConfirmationModalHandler(transaction)
+                        }}
+                      >
+                        <X size={18} color={'tomato'} />
+                      </Button>
+                    </OverlayTrigger>
+                  </div>
+                </li>
+              ))
+            ) : (
+              <span>
+                Nenhuma transação encontrada. Adicione uma nova despesa/receita
+                ou mude os filtros aplicados.
+              </span>
+            )}
+          </ul>
+        </div>
+        <StackedBarchart />
+      </Container>
+    </>
   )
 }

@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { toast } from 'react-toastify'
 
 import { api } from '../services/api'
 
@@ -83,6 +84,10 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     setTransactions(() => [...transactions, transaction])
   }
   async function deleteTransaction(transactionId: number) {
+    const deletedTransaction = transactions.find((tr) => tr.id == transactionId)
+
+    console.log(deletedTransaction)
+
     const response = await api.delete(`/transactions/${transactionId}`)
 
     console.log('RESPOSTA:', response)
@@ -92,6 +97,12 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     })
 
     setTransactions(transactionsAfterDelete)
+
+    toast.success(
+      `${deletedTransaction!.type === 'deposit' ? 'Receita' : 'Despesa'} "${
+        deletedTransaction!.title
+      }" foi excluída.`,
+    )
   }
 
   return (
