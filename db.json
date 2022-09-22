@@ -100,39 +100,48 @@
   "categories": [
     {
       "id": 1,
-      "name": ""
+      "name": "",
+      "color": ""
     },
     {
       "id": 2,
-      "name": "Alimentação"
+      "name": "Alimentação",
+      "color": "#FF3C26"
     },
     {
       "id": 3,
-      "name": "Academia"
+      "name": "Academia",
+      "color": "#69D959"
     },
     {
       "id": 4,
-      "name": "Saúde"
+      "name": "Saúde",
+      "color": "#05A782"
     },
     {
       "id": 5,
-      "name": "Investimentos"
+      "name": "Investimentos",
+      "color": "#F2CE00"
     },
     {
       "id": 6,
-      "name": "Pets"
+      "name": "Pets",
+      "color": "#FF7C17"
     },
     {
       "id": 7,
-      "name": "Educação"
+      "name": "Educação",
+      "color": "#0071B7"
     },
     {
       "id": 8,
-      "name": "Transporte"
+      "name": "Transporte",
+      "color": "#EFEAEA"
     },
     {
       "id": 9,
-      "name": "Extra"
+      "name": "Extra",
+      "color": "#C90132"
     }
   ]
 }
