@@ -183,7 +183,13 @@ export function mirageServer() {
       //   return transaction.update(data)
       // })
 
-      this.delete('/transactions/:id')
+      // this.delete('/transactions/:id')
+
+      this.delete('/transactions/:id', (schema, request) => {
+        let id = request.params.id
+
+        return schema.transactions.find(id).destroy()
+      })
     },
   })
 }

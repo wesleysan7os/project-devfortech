@@ -25,7 +25,7 @@ import { Transaction, useTransactions } from '../../../hooks/useTransactions'
 import { Container } from './styles'
 
 export function FullReport() {
-  const { transactions, categories } = useTransactions()
+  const { transactions, categories, deleteTransaction } = useTransactions()
 
   const [filteredTransactions, setFilteredTransactions] = useState<
     Transaction[]
@@ -46,34 +46,39 @@ export function FullReport() {
     console.log(dateFilter)
 
     if (typeFilter === 1) {
-      tempTransactions = tempTransactions.filter((tr) => tr.type === 'deposit')
+      tempTransactions = tempTransactions.filter(
+        (transaction) => transaction.type === 'deposit',
+      )
     } else if (typeFilter === 2) {
-      tempTransactions = tempTransactions.filter((tr) => tr.type === 'withdraw')
+      tempTransactions = tempTransactions.filter(
+        (transaction) => transaction.type === 'withdraw',
+      )
     } else {
       setTypeFilter(false)
     }
 
     if (categoryFilter !== 'all') {
       tempTransactions = tempTransactions.filter(
-        (tr) => tr.category === categoryFilter,
+        (transaction) => transaction.category === categoryFilter,
       )
     }
 
     if (titleFilter !== false) {
-      tempTransactions = tempTransactions.filter((tr) => {
+      tempTransactions = tempTransactions.filter((transaction) => {
         if (
-          tr.title
+          transaction.title
             .toLowerCase()
             .trim()
             .includes(String(titleFilter).toLowerCase())
         )
-          return tr
+          return transaction
       })
     }
 
     if (dateFilter !== '') {
       tempTransactions = tempTransactions.filter(
-        (tr) => String(tr.createdAt).split('T')[0] === dateFilter,
+        (transaction) =>
+          String(transaction.createdAt).split('T')[0] === dateFilter,
       )
     }
 
@@ -87,13 +92,9 @@ export function FullReport() {
     setTitleFilter(false)
   }
 
-  const overlayProps = {
-    placement: 'top',
-    delay: {
-      show: 1000,
-      hide: 100,
-    },
-  }
+  const delayShow = 1000
+
+  const delayHide = 100
 
   const renderTooltip = (textContent: string) => (
     <Tooltip id="button-tooltip">{textContent}</Tooltip>
@@ -106,7 +107,7 @@ export function FullReport() {
     }).format(expense)
   }
 
-  function formatDate(date: string) {
+  function formatDate(date: Date) {
     return new Date(date).toLocaleDateString('pt-BR')
   }
 
@@ -216,7 +217,11 @@ export function FullReport() {
             </FloatingLabel>
           </Form.Group>
           <OverlayTrigger
-            {...overlayProps}
+            placement={'top'}
+            delay={{
+              show: delayShow,
+              hide: delayHide,
+            }}
             overlay={renderTooltip('Limpar filtros')}
           >
             <Button variant="outline-danger" onClick={clearFilters}>
@@ -226,27 +231,34 @@ export function FullReport() {
         </div>
         <ul className="list">
           {filteredTransactions.length > 0 ? (
-            filteredTransactions.map((tr) => (
-              <li>
+            filteredTransactions.map((transaction) => (
+              <li key={transaction.id}>
                 <span className="info-value secondary">
-                  {getCategoryIcon(tr.category)}
-                  {tr.category}
+                  {getCategoryIcon(transaction.category)}
+                  {transaction.category}
                 </span>
-                <span className="info-value transaction-title">{tr.title}</span>
+                <span className="info-value transaction-title">
+                  {transaction.title}
+                </span>
                 <span className="info-value primary">
-                  {getTransactionTypeIcon(tr.type)} {format(tr.amount)}
+                  {getTransactionTypeIcon(transaction.type)}{' '}
+                  {format(transaction.amount)}
                 </span>
                 <span className="info-value secondary date">
-                  {formatDate(tr.createdAt)}
+                  {formatDate(transaction.createdAt)}
                 </span>
 
                 <div className="actions">
                   <OverlayTrigger
-                    {...overlayProps}
+                    placement={'top'}
+                    delay={{
+                      show: delayShow,
+                      hide: delayHide,
+                    }}
                     overlay={renderTooltip(
                       `Editar ${
-                        tr.type === 'withdraw' ? 'despesa' : 'receita'
-                      } '${tr.title}'`,
+                        transaction.type === 'withdraw' ? 'despesa' : 'receita'
+                      } '${transaction.title}'`,
                     )}
                   >
                     <Button variant="link">
@@ -258,14 +270,24 @@ export function FullReport() {
                     </Button>
                   </OverlayTrigger>
                   <OverlayTrigger
-                    {...overlayProps}
+                    placement={'top'}
+                    delay={{
+                      show: delayShow,
+                      hide: delayHide,
+                    }}
                     overlay={renderTooltip(
                       `Excluir ${
-                        tr.type === 'withdraw' ? 'despesa' : 'receita'
-                      } '${tr.title}'`,
+                        transaction.type === 'withdraw' ? 'despesa' : 'receita'
+                      } '${transaction.title}'`,
                     )}
                   >
-                    <Button variant="link">
+                    <Button
+                      variant="link"
+                      onClick={() => {
+                        console.log('ID TRANSACTION:', transaction.id)
+                        deleteTransaction(Number(transaction.id))
+                      }}
+                    >
                       <X size={18} color={'tomato'} />
                     </Button>
                   </OverlayTrigger>
