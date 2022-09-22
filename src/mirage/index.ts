@@ -62,7 +62,7 @@ export function mirageServer() {
           },
           {
             id: 6,
-            title: 'Teste 6',
+            title: 'Gasolina',
             type: 'withdraw',
             category: 'Transporte',
             amount: 1100,
@@ -78,7 +78,7 @@ export function mirageServer() {
           },
           {
             id: 8,
-            title: 'Teste 8',
+            title: 'mcDonalds',
             type: 'withdraw',
             category: 'Alimentação',
             amount: 4200,
@@ -86,7 +86,7 @@ export function mirageServer() {
           },
           {
             id: 9,
-            title: 'Teste 9',
+            title: 'Salário',
             type: 'deposit',
             category: 'Extra',
             amount: 600,

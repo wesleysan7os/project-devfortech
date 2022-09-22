@@ -8,7 +8,7 @@ import {
 
 import { api } from '../services/api'
 
-interface Transaction {
+export interface Transaction {
   id: number
   title: string
   type: 'deposit' | 'withdraw'

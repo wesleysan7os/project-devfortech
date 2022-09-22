@@ -21,17 +21,24 @@ import {
   FloatingLabel,
 } from 'react-bootstrap'
 
-import { useTransactions } from '../../../hooks/useTransactions'
+import { Transaction, useTransactions } from '../../../hooks/useTransactions'
 import { Container } from './styles'
 
 export function FullReport() {
   const { transactions, categories } = useTransactions()
 
-  const [filteredTransactions, setFilteredTransactions] = useState(transactions)
+  const [filteredTransactions, setFilteredTransactions] = useState<
+    Transaction[]
+  >([])
+
   const [typeFilter, setTypeFilter] = useState<boolean | number>(false)
   const [categoryFilter, setCategoryFilter] = useState<string>('all')
   const [dateFilter, setDateFilter] = useState<boolean | string>('')
   const [titleFilter, setTitleFilter] = useState<boolean | string>(false)
+
+  useEffect(() => {
+    setFilteredTransactions(transactions)
+  }, [transactions])
 
   useEffect(() => {
     let tempTransactions = transactions
@@ -70,7 +77,7 @@ export function FullReport() {
       )
     }
 
-    setFilteredTransactions(tempTransactions)
+    setFilteredTransactions(() => [...tempTransactions])
   }, [typeFilter, categoryFilter, dateFilter, titleFilter])
 
   function clearFilters() {
