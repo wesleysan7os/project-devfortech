@@ -104,7 +104,6 @@ export function StackedBarchart() {
   ]
 
   const CustomTooltip = ({ active, payload, label }: any) => {
-    console.log('PAYLOAD', label)
     if (active && payload && payload.length) {
       return (
         <StyledTooltip
@@ -177,6 +176,8 @@ export function StackedBarchart() {
           </div>
         </StyledTooltip>
       )
+    } else {
+      return null
     }
   }
 
