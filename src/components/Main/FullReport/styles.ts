@@ -109,4 +109,12 @@ export const Container = styled.main`
   .list li:hover .actions {
     visibility: visible;
   }
+
+  @media (max-width: 550px) {
+    .report-container {
+      display: none;
+    }
+    max-width: 400px;
+    grid-template-columns: 1fr;
+  }
 `
