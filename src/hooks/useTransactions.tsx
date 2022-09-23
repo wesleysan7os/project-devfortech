@@ -85,8 +85,11 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       `/transactions/${transactionInput.id}`,
       transactionInput,
     )
-    const { transactions: transaction } = response.data
-    setTransactions(() => [...transactions, transaction])
+    const transaction = response.data
+    const transactionsFiltered = transactions.filter(
+      (transaction) => transaction.id !== transactionInput.id,
+    )
+    setTransactions(() => [...transactionsFiltered, transaction])
   }
 
   async function deleteTransaction(transactionId: number) {
