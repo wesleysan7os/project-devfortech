@@ -15,11 +15,13 @@ export const SummaryPieChartContainer = styled.div`
     text-align: center;
     border-radius: 0.5rem;
     padding: 1rem;
+    border: 1px solid #565656;
     background-color: #414141;
   }
 
   .flex-row {
     display: flex;
+    border: 1px solid #565656;
     background-color: #414141;
     border-radius: 0.5rem;
     height: 100%;

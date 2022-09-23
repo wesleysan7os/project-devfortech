@@ -179,7 +179,7 @@ export function StackedBarchart() {
 
   return (
     <BarchartContainer>
-      <h5>Resumo Anual - {getCurrentYear()}</h5>
+      <h5>Análise Anual - {getCurrentYear()}</h5>
       <BarChart
         width={500}
         height={450}
