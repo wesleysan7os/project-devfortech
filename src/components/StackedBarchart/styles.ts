@@ -15,10 +15,6 @@ export const BarchartContainer = styled.div`
     background-color: #414141;
     margin: 0.6rem 0.7rem;
   }
-
-  @media (max-width: 550px) {
-    display: none;
-  }
 `
 
 interface Props {

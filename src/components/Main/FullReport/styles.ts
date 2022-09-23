@@ -123,6 +123,10 @@ export const Container = styled.main`
   }
 
   @media (max-width: 550px) {
+    .report-container {
+      display: none;
+    }
+
     max-width: 400px;
     grid-template-columns: 1fr;
   }
