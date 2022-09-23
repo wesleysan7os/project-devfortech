@@ -1,14 +1,16 @@
-import { 
-  Barbell, 
-  Car, 
-  Dog, 
-  Gift, 
-  GraduationCap, 
-  Hamburger, 
-  Heartbeat, 
-  TrendUp } from 'phosphor-react'
+import {
+  Barbell,
+  Car,
+  Dog,
+  Gift,
+  GraduationCap,
+  Hamburger,
+  Heartbeat,
+  TrendUp,
+} from 'phosphor-react'
 
 import { useTransactions } from '../../../hooks/useTransactions'
+import { checkDateRange } from '../../../utils/generalFunctions'
 import { Container } from './styles'
 
 interface Expenses {
@@ -22,28 +24,51 @@ interface Expenses {
   extra: number
 }
 
-type ExpensesKeys = 'food' | 'gym' | 'health' |
-    'investiments' | 'pets' |
-    'education' | 'transports' | 'extra'
+type ExpensesKeys =
+  | 'food'
+  | 'gym'
+  | 'health'
+  | 'investiments'
+  | 'pets'
+  | 'education'
+  | 'transports'
+  | 'extra'
 
 export function ExpensesByCategory() {
   const { transactions } = useTransactions()
 
   const expensesByCategory = {} as Expenses
 
-  function calculateExpensesByCategory(key: ExpensesKeys, categoryName: string) {
-    expensesByCategory[key] = transactions.reduce((acc, transaction) => {
-      if (transaction.type === 'withdraw' && transaction.category === categoryName) {
-        acc += transaction.amount
-      }
-      return acc
-    }, 0)}
+  function calculateExpensesByCategory(
+    key: ExpensesKeys,
+    categoryName: string,
+  ) {
+    expensesByCategory[key] = transactions
+      .filter((tr) => {
+        if (
+          checkDateRange(new Date(tr.createdAt), 7) &&
+          tr.type === 'withdraw' &&
+          tr.category === categoryName
+        ) {
+          return tr
+        }
+      })
+      .reduce((acc, transaction) => {
+        if (
+          transaction.type === 'withdraw' &&
+          transaction.category === categoryName
+        ) {
+          acc += transaction.amount
+        }
+        return acc
+      }, 0)
+  }
 
   function format(expense: number) {
-    return new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(expense)
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(expense)
   }
 
   calculateExpensesByCategory('food', 'Alimentação')
@@ -61,58 +86,59 @@ export function ExpensesByCategory() {
       <ul>
         <li>
           <div>
-            <Hamburger size={32} weight="bold" color='#FF3C26' />
+            <Hamburger size={32} weight="bold" color="#FF3C26" />
             <span>Alimentação</span>
           </div>
-          { format(expensesByCategory.food) }
+          {format(expensesByCategory.food)}
         </li>
         <li>
           <div>
-            <Barbell size={32} weight="bold" color="#69D959"/>
+            <Barbell size={32} weight="bold" color="#69D959" />
             <span>Academia</span>
           </div>
-          { format(expensesByCategory.gym) }
+          {format(expensesByCategory.gym)}
         </li>
         <li>
           <div>
-            <Heartbeat size={32} weight="bold" color="#05A782"/>
+            <Heartbeat size={32} weight="bold" color="#05A782" />
             <span>Saúde</span>
           </div>
-          { format(expensesByCategory.health) }  
+          {format(expensesByCategory.health)}
         </li>
         <li>
           <div>
-            <TrendUp size={32} weight="bold" color="#F2CE00"/>
+            <TrendUp size={32} weight="bold" color="#F2CE00" />
             <span>Investimentos</span>
           </div>
-          { format(expensesByCategory.investiments) }
+          {format(expensesByCategory.investiments)}
         </li>
         <li>
           <div>
-            <Dog size={32} weight="bold" color="#FF7C17"/>
+            <Dog size={32} weight="bold" color="#FF7C17" />
             <span>Pets</span>
           </div>
-          { format(expensesByCategory.pets) }
+          {format(expensesByCategory.pets)}
         </li>
         <li>
           <div>
-            <GraduationCap size={32} weight="bold" color='#0071B7'/>
+            <GraduationCap size={32} weight="bold" color="#0071B7" />
             <span>Educação</span>
           </div>
-          { format(expensesByCategory.education) }
+          {format(expensesByCategory.education)}
         </li>
         <li>
           <div>
-            <Car size={32} weight="bold" color='#EFEAEA'/>
-            <span>Transporte</span> 
+            <Car size={32} weight="bold" color="#EFEAEA" />
+            <span>Transporte</span>
           </div>
-          { format(expensesByCategory.transports) }</li>
+          {format(expensesByCategory.transports)}
+        </li>
         <li>
           <div>
-            <Gift size={32} weight="bold" color='#C90132'/>
+            <Gift size={32} weight="bold" color="#C90132" />
             <span>Extra</span>
           </div>
-          { format(expensesByCategory.extra) }
+          {format(expensesByCategory.extra)}
         </li>
       </ul>
     </Container>

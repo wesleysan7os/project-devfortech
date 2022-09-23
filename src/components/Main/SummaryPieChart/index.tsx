@@ -7,6 +7,7 @@ import {
   Text,
 } from 'recharts'
 import { useTransactions } from '../../../hooks/useTransactions'
+import { checkDateRange } from '../../../utils/generalFunctions'
 
 import { LabelColor, StyledTooltip, SummaryPieChartContainer } from './styles'
 
@@ -54,7 +55,15 @@ export function SummaryPieChart() {
 
   function getTotalAmountByCategory(category: string) {
     return transactions
-      .filter((tr) => tr.type === 'withdraw' && tr.category === category)
+      .filter((tr) => {
+        if (
+          checkDateRange(new Date(tr.createdAt), 30) &&
+          tr.type === 'withdraw' &&
+          tr.category === category
+        ) {
+          return tr
+        }
+      })
       .reduce((acc, obj) => acc + obj.amount, 0)
   }
 
