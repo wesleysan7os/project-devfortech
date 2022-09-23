@@ -12,7 +12,7 @@ import { api } from '../services/api'
 export interface Transaction {
   id: number
   title: string
-  type: 'deposit' | 'withdraw'
+  type: 'deposit' | 'withdraw' | undefined
   category:
     | ''
     | 'Alimentação'
@@ -24,7 +24,7 @@ export interface Transaction {
     | 'Transporte'
     | 'Extra'
   amount: number
-  createdAt: Date
+  createdAt: Date | string
 }
 
 type TransactionInput = Omit<Transaction, 'id'>
@@ -53,6 +53,7 @@ interface TransactionsContextData {
   categories: Categories[]
   createTransaction: (transactionInput: TransactionInput) => Promise<void>
   deleteTransaction: (transactionId: number) => Promise<void>
+  editTransaction: (transactionToBeEdited: Transaction) => Promise<void>
 }
 
 export const TransactionsContext = createContext<TransactionsContextData>(
@@ -78,6 +79,16 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     const { transactions: transaction } = response.data
     setTransactions(() => [...transactions, transaction])
   }
+
+  async function editTransaction(transactionInput: Transaction) {
+    const response = await api.put(
+      `/transactions/${transactionInput.id}`,
+      transactionInput,
+    )
+    const { transactions: transaction } = response.data
+    setTransactions(() => [...transactions, transaction])
+  }
+
   async function deleteTransaction(transactionId: number) {
     const deletedTransaction = transactions.find((tr) => tr.id == transactionId)
 
@@ -98,7 +109,13 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
   return (
     <TransactionsContext.Provider
-      value={{ transactions, categories, createTransaction, deleteTransaction }}
+      value={{
+        transactions,
+        categories,
+        createTransaction,
+        deleteTransaction,
+        editTransaction,
+      }}
     >
       {children}
     </TransactionsContext.Provider>
