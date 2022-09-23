@@ -3,19 +3,33 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-firebase/auth": "^0.2.10",
+    "@react-pdf/renderer": "^3.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/react-bootstrap": "^0.32.30",
+    "axios": "^0.27.2",
+    "bootstrap": "^5.2.0",
+    "firebase": "^9.10.0",
+    "phosphor-react": "^1.4.1",
+    "prettier": "^2.7.1",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.0.3",
+    "react-imask": "^6.4.2",
+    "react-number-format": "^5.0.0-beta.4",
+    "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.0.8",
+    "recharts": "^2.1.14",
+    "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "dev": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "vite build"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +48,23 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.8",
+    "@types/node": "^18.7.13",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@types/styled-components": "^5.1.26",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@vitejs/plugin-react": "1.1.1",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard-with-typescript": "^22.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.31.1",
+    "typescript": "*",
+    "vite": "2.7.0"
   }
 }
