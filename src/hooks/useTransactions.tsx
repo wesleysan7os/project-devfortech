@@ -5,9 +5,11 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import { toast } from 'react-toastify'
 
 import { api } from '../services/api'
+import { auth } from '../services/firebase'
 
 export interface Transaction {
   id: number
@@ -25,6 +27,7 @@ export interface Transaction {
     | 'Extra'
   amount: number
   createdAt: Date | string
+  userID?: string
 }
 
 type TransactionInput = Omit<Transaction, 'id'>
@@ -63,21 +66,33 @@ export const TransactionsContext = createContext<TransactionsContextData>(
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [categories, setCategories] = useState<Categories[]>([])
+  const [user] = useAuthState(auth)
 
   useEffect(() => {
     const fetchData = async () => {
-      api.get('transactions').then((response) => setTransactions(response.data))
+      api.get('transactions').then((response) => {
+        const userTransactions = response.data.filter(
+          (transaction: any) => transaction.userID === user!.uid,
+        )
+
+        setTransactions(userTransactions)
+      })
 
       api.get('categories').then((response) => setCategories(response.data))
     }
 
     fetchData()
-  }, [])
+  }, [user])
 
   async function createTransaction(transactionInput: TransactionInput) {
-    const response = await api.post('/transactions', transactionInput)
+    const transactionInputWithUserId = {
+      ...transactionInput,
+      userID: user!.uid,
+    }
+
+    const response = await api.post('/transactions', transactionInputWithUserId)
     const transaction = response.data
-    setTransactions([...transactions, transaction])
+    setTransactions(() => [...transactions, transaction])
   }
 
   async function editTransaction(transactionInput: Transaction) {
@@ -86,10 +101,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       transactionInput,
     )
     const transaction = response.data
-    const transactionsFiltered = transactions.filter(
-      (transaction) => transaction.id !== transactionInput.id,
-    )
-    setTransactions(() => [...transactionsFiltered, transaction])
+    setTransactions(() => [...transactions, transaction])
   }
 
   async function deleteTransaction(transactionId: number) {

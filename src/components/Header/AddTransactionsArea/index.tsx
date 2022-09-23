@@ -31,8 +31,8 @@ export function AddTransactionsArea() {
           }}
         >
           <StyledButton borderColor={'lightgreen'}>
-            Adicionar Entradas
-            <Plus size={100} color="lightgreen" weight="bold" />
+            Adicionar Receitas
+            <Plus className="" size={100} color="lightgreen" weight="bold" />
           </StyledButton>
         </a>
         <a
@@ -42,7 +42,7 @@ export function AddTransactionsArea() {
           }}
         >
           <StyledButton borderColor={'orangered'}>
-            Adicionar Saídas
+            Adicionar Despesas
             <Plus size={100} color="red" weight="bold" />
           </StyledButton>
         </a>
@@ -63,15 +63,17 @@ export function AddTransactionsArea() {
           >
             {selectedReport === 'summaryWithdraw'
               ? 'Acessar Relatório Completo'
-              : 'Acessar Resumo Gastos'}
+              : 'Acessar Resumo'}
           </StyledButton>
         </a>
       </Container>
-      <TransactionModal
-        show={displayModal}
-        onClose={handleClose}
-        transactionType={transactionType}
-      />
+      {displayModal && (
+        <TransactionModal
+          show={displayModal}
+          onClose={handleClose}
+          transactionType={transactionType}
+        />
+      )}
     </>
   )
 }

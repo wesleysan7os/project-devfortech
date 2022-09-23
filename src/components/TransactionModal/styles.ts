@@ -10,6 +10,7 @@ export const Container = styled.main`
   input:focus,
   select {
     color: #f5f5f5;
+
     background-color: #414141;
   }
 

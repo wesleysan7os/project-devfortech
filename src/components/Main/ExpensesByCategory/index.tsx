@@ -94,7 +94,7 @@ export function ExpensesByCategory() {
 
   return (
     <Container>
-      <h5>Resumo Gastos Últimos 7 dias</h5>
+      <h5>Resumo Despesas - Últimos 7 dias</h5>
       <ul>
         <li>
           <div>

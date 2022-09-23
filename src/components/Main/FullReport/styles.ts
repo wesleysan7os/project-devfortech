@@ -29,6 +29,7 @@ export const Container = styled.main`
     border-radius: 0.5rem;
     padding: 1rem;
     background-color: #414141;
+    border: 1px solid #565656;
     margin: 0.6rem 0.7rem;
   }
 
@@ -108,10 +109,20 @@ export const Container = styled.main`
     visibility: visible;
   }
 
+  .full-report-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.5rem;
+    margin: 10px;
+    border-radius: 0.5rem;
+
+    border: 1px solid #565656;
+    background-color: #414141;
+  }
+
   @media (max-width: 550px) {
-    .report-container {
-      display: none;
-    }
     max-width: 400px;
     grid-template-columns: 1fr;
   }

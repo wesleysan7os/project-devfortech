@@ -7,25 +7,45 @@ export function getCurrentYear(): string {
 }
 
 export function checkDateRange(startDate: Date, daysLimit: number): boolean {
-  console.log('======================================')
   let today = new Date()
 
-  console.log('DATA DA TRANSAÇÃO:', startDate)
   let dateLimit = new Date()
 
-  console.log('DATA DE HOJE:', dateLimit)
-
   dateLimit = new Date(today.setDate(dateLimit.getDate() - daysLimit))
-
-  console.log('DATA SUBTRAÍDA:', dateLimit)
-
-  console.log(
-    startDate.getTime() >= dateLimit.getTime() &&
-      startDate.getTime() <= new Date().getTime(),
-  )
 
   return (
     startDate.getTime() >= dateLimit.getTime() &&
     startDate.getTime() <= new Date().getTime()
   )
+}
+
+export function getMonthName(month: string) {
+  switch (month) {
+    case '01':
+      return 'Janeiro'
+    case '02':
+      return 'Fevereiro'
+    case '03':
+      return 'Março'
+    case '04':
+      return 'Abril'
+    case '05':
+      return 'Maio'
+    case '06':
+      return 'Junho'
+    case '07':
+      return 'Julho'
+    case '08':
+      return 'Agosto'
+    case '09':
+      return 'Setembro'
+    case '10':
+      return 'Outubro'
+    case '11':
+      return 'Novembro'
+    case '12':
+      return 'Dezembro'
+    default:
+      break
+  }
 }
