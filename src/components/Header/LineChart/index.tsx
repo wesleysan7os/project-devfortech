@@ -1,21 +1,13 @@
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-} from 'recharts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 import { useTransactions } from '../../../hooks/useTransactions'
 import { formatDate } from '../../../utils/generalFunctions'
 
 export function LineChartTotal() {
   const { transactions } = useTransactions()
-  
+
   const data = transactions.reduce(
     (acc, transaction) => {
-      console.log('DATA AQUI',transaction.createdAt)
-      if (Number(formatDate(transaction.createdAt).slice(3,5)) == 1) {
+      if (Number(formatDate(transaction.createdAt).slice(3, 5)) == 1) {
         if (transaction.type === 'deposit') {
           acc[0].Entradas += transaction.amount
           acc[0].total += transaction.amount
@@ -24,7 +16,7 @@ export function LineChartTotal() {
           acc[0].total -= transaction.amount
         }
       }
-      if (Number(formatDate(transaction.createdAt).slice(3,5)) + 1 == 2) {
+      if (Number(formatDate(transaction.createdAt).slice(3, 5)) + 1 == 2) {
         if (transaction.type === 'deposit') {
           acc[1].Entradas += transaction.amount
           acc[1].total += transaction.amount
@@ -33,7 +25,7 @@ export function LineChartTotal() {
           acc[1].total -= transaction.amount
         }
       }
-      if (Number(formatDate(transaction.createdAt).slice(3,5)) + 1 == 3) {
+      if (Number(formatDate(transaction.createdAt).slice(3, 5)) + 1 == 3) {
         if (transaction.type === 'deposit') {
           acc[2].Entradas += transaction.amount
           acc[2].total += transaction.amount
@@ -42,7 +34,7 @@ export function LineChartTotal() {
           acc[2].total -= transaction.amount
         }
       }
-      if (Number(formatDate(transaction.createdAt).slice(3,5)) + 1 == 4) {
+      if (Number(formatDate(transaction.createdAt).slice(3, 5)) + 1 == 4) {
         if (transaction.type === 'deposit') {
           acc[3].Entradas += transaction.amount
           acc[3].total += transaction.amount
@@ -51,7 +43,7 @@ export function LineChartTotal() {
           acc[3].total -= transaction.amount
         }
       }
-      if (Number(formatDate(transaction.createdAt).slice(3,5)) + 1 == 5) {
+      if (Number(formatDate(transaction.createdAt).slice(3, 5)) + 1 == 5) {
         if (transaction.type === 'deposit') {
           acc[4].Entradas += transaction.amount
           acc[4].total += transaction.amount
@@ -60,7 +52,7 @@ export function LineChartTotal() {
           acc[4].total -= transaction.amount
         }
       }
-      if (Number(formatDate(transaction.createdAt).slice(3,5)) + 1 == 6) {
+      if (Number(formatDate(transaction.createdAt).slice(3, 5)) + 1 == 6) {
         if (transaction.type === 'deposit') {
           acc[5].Entradas += transaction.amount
           acc[5].total += transaction.amount
@@ -69,7 +61,7 @@ export function LineChartTotal() {
           acc[5].total -= transaction.amount
         }
       }
-      if (Number(formatDate(transaction.createdAt).slice(3,5)) + 1 == 7) {
+      if (Number(formatDate(transaction.createdAt).slice(3, 5)) + 1 == 7) {
         if (transaction.type === 'deposit') {
           acc[7].Entradas += transaction.amount
           acc[7].total += transaction.amount
@@ -78,7 +70,7 @@ export function LineChartTotal() {
           acc[7].total -= transaction.amount
         }
       }
-      if (Number(formatDate(transaction.createdAt).slice(3,5)) + 1 == 8) {
+      if (Number(formatDate(transaction.createdAt).slice(3, 5)) + 1 == 8) {
         if (transaction.type === 'deposit') {
           acc[7].Entradas += transaction.amount
           acc[7].total += transaction.amount
@@ -87,7 +79,7 @@ export function LineChartTotal() {
           acc[7].total -= transaction.amount
         }
       }
-      if (Number(formatDate(transaction.createdAt).slice(3,5)) + 1 == 9) {
+      if (Number(formatDate(transaction.createdAt).slice(3, 5)) + 1 == 9) {
         if (transaction.type === 'deposit') {
           acc[8].Entradas += transaction.amount
           acc[8].total += transaction.amount
@@ -96,7 +88,7 @@ export function LineChartTotal() {
           acc[8].total -= transaction.amount
         }
       }
-      if (Number(formatDate(transaction.createdAt).slice(3,5)) + 1 == 10) {
+      if (Number(formatDate(transaction.createdAt).slice(3, 5)) + 1 == 10) {
         if (transaction.type === 'deposit') {
           acc[9].Entradas += transaction.amount
           acc[9].total += transaction.amount
@@ -105,7 +97,7 @@ export function LineChartTotal() {
           acc[9].total -= transaction.amount
         }
       }
-      if (Number(formatDate(transaction.createdAt).slice(3,5)) + 1 == 11) {
+      if (Number(formatDate(transaction.createdAt).slice(3, 5)) + 1 == 11) {
         if (transaction.type === 'deposit') {
           acc[10].Entradas += transaction.amount
           acc[10].total += transaction.amount
@@ -114,7 +106,7 @@ export function LineChartTotal() {
           acc[10].total -= transaction.amount
         }
       }
-      if (Number(formatDate(transaction.createdAt).slice(3,5)) + 1 == 12) {
+      if (Number(formatDate(transaction.createdAt).slice(3, 5)) + 1 == 12) {
         if (transaction.type === 'deposit') {
           acc[11].Entradas += transaction.amount
           acc[11].total += transaction.amount
@@ -143,10 +135,9 @@ export function LineChartTotal() {
   )
   const contentStyle = {
     backgroundColor: 'rgba(65,65,65,0.5)',
-    
   }
   const wrapperStyle = {
-    border: 'none'
+    border: 'none',
   }
   return (
     <LineChart

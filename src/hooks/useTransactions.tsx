@@ -75,8 +75,8 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
   async function createTransaction(transactionInput: TransactionInput) {
     const response = await api.post('/transactions', transactionInput)
-    const { transactions: transaction } = response.data
-    setTransactions(() => [...transactions, transaction])
+    const transaction = response.data
+    setTransactions([...transactions, transaction])
   }
   async function deleteTransaction(transactionId: number) {
     const deletedTransaction = transactions.find((tr) => tr.id == transactionId)
