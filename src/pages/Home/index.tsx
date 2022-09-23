@@ -26,7 +26,7 @@ export function Home() {
         const doc = await getDocs(q)
         const data = doc.docs[0].data()
         setName(!data.name ? 'usuário' : data.name)
-      },1000)
+      }, 3000)
     } catch (err) {
       console.error(err)
     }
