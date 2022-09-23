@@ -12,6 +12,7 @@ import {
 import { auth, db, logout } from '../../services/firebase'
 import { Header } from '../../components/Header'
 import { Main } from '../../components/Main'
+import { GridContainer } from './style'
 
 export function Home() {
   const [user, loading, error] = useAuthState(auth)
@@ -37,9 +38,13 @@ export function Home() {
   }, [user, loading])
 
   return (
-    <>
-      <Header userName={name} />
-      <Main />
-    </>
+    <GridContainer>
+      <div className="header">
+        <Header userName={name} />
+      </div>
+      <div className="main">
+        <Main />
+      </div>
+    </GridContainer>
   )
 }

@@ -24,7 +24,6 @@ export function StackedBarchart() {
         let transactionMonth = String(tr.createdAt).split('-')[1]
 
         let transactionYear = String(tr.createdAt).split('T')[0].split('-')[0]
-
         return (
           tr.type === type &&
           transactionMonth === month &&

@@ -155,12 +155,12 @@ export function TransactionModal({
                   placeholder="Título da transação"
                   maxLength={30}
                   value={titleInput}
-                  onChange={(e) => {
-                    setTitleInput(e.target.value)
+                  onChange={(e) => setTitleInput(e.target.value)}
+                  onBlur={() =>
                     isTitleValid(titleInput)
                       ? setTitleError(false)
                       : setTitleError(true)
-                  }}
+                  }
                 />
               </FloatingLabel>
               <ErrorSpan>{titleError && stringObligatoryField}</ErrorSpan>
@@ -179,10 +179,12 @@ export function TransactionModal({
                   displayType="input"
                   onValueChange={(values, sourceInfo) => {
                     setValueInput(values.floatValue as number)
+                  }}
+                  onBlur={() =>
                     isValueValid(valueInput)
                       ? setValueError(false)
                       : setValueError(true)
-                  }}
+                  }
                 ></NumericFormat>
               </FloatingLabel>
               <ErrorSpan>{valueError && stringObligatoryField}</ErrorSpan>
