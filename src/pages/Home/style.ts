@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const GridContainer = styled.div`
+  margin-bottom: 50px;
   @media (max-width: 550px) {
     display: grid;
     grid-template-columns: 1fr;

@@ -19,6 +19,10 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+ 
+
+  
+
   body{
     opacity: 0.9;
     background-image: radial-gradient(#242424 2px, #121212 2px);

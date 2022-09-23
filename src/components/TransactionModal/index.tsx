@@ -20,7 +20,8 @@ import { useTransactions } from '../../hooks/useTransactions'
 
 type ModalProps = {
   show: boolean
-  transactionType: 'withdraw' | 'deposit'
+  transactionType?: 'withdraw' | 'deposit'
+  transactionId: number | string
   onClose: () => void
 }
 
@@ -39,13 +40,19 @@ export function TransactionModal({
   show,
   onClose,
   transactionType,
+  transactionId,
 }: ModalProps) {
-  const { categories, createTransaction } = useTransactions()
+  const { transactions, categories, createTransaction, editTransaction } =
+    useTransactions()
+
+  const transactionToBeEdited = transactions.find(
+    (transaction) => transaction.id === transactionId,
+  )
 
   const [titleInput, setTitleInput] = useState('')
   const [valueInput, setValueInput] = useState(0)
   const [categoryInput, setCategoryInput] = useState<CategorysType>('')
-  const [dateInput, setDateInput] = useState<Date>(new Date())
+  const [dateInput, setDateInput] = useState<Date | string>(new Date())
 
   const [titleError, setTitleError] = useState(false)
   const [valueError, setValueError] = useState(false)
@@ -53,6 +60,7 @@ export function TransactionModal({
 
   let formRef = useRef<HTMLFormElement>()
   let dateInputRef = useRef<HTMLInputElement>(null)
+  let titleInputRef = useRef<HTMLInputElement>(null)
 
   function isModalDataValid(): boolean {
     isTitleValid(titleInput) ? setTitleError(false) : setTitleError(true)
@@ -77,25 +85,58 @@ export function TransactionModal({
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
 
-    if (isModalDataValid()) {
-      createTransaction({
-        title: titleInput,
-        type: transactionType,
-        category: categoryInput,
-        amount: valueInput,
-        createdAt: dateInput,
-      })
-      onClose()
-      toast.success(
-        `${
-          transactionType === 'withdraw' ? 'Despesa' : 'Receita'
-        } cadastrada com sucesso.`,
-      )
+    if (transactionToBeEdited) {
+      if (isModalDataValid()) {
+        editTransaction({
+          id: transactionToBeEdited.id,
+          title: titleInput,
+          type: transactionType,
+          category: categoryInput,
+          amount: valueInput,
+          createdAt: dateInput,
+        })
+        onClose()
+        toast.success(
+          `${
+            transactionType === 'withdraw' ? 'Despesa' : 'Receita'
+          } editada com sucesso.`,
+        )
+      }
+    } else {
+      if (isModalDataValid()) {
+        createTransaction({
+          title: titleInput,
+          type: transactionType,
+          category: categoryInput,
+          amount: valueInput,
+          createdAt: dateInput,
+        })
+        onClose()
+        toast.success(
+          `${
+            transactionType === 'withdraw' ? 'Despesa' : 'Receita'
+          } cadastrada com sucesso.`,
+        )
+      }
     }
   }
 
-  function loadTodaysDate() {
-    dateInputRef!.current!.value = getTodayDate()
+  function handleModalEnter() {
+    if (transactionToBeEdited) {
+      setCategoryInput(transactionToBeEdited.category)
+      setValueInput(transactionToBeEdited.amount)
+      setTitleInput(transactionToBeEdited.title)
+      setDateInput(String(transactionToBeEdited!.createdAt).split('T')[0])
+    }
+
+    dateInputRef!.current!.value = transactionId
+      ? String(transactionToBeEdited!.createdAt).split('T')[0]
+      : getTodayDate()
+
+    titleInputRef.current!.value =
+      transactionToBeEdited && !titleInput
+        ? transactionToBeEdited.title
+        : titleInput
   }
 
   function handleExited() {
@@ -119,7 +160,7 @@ export function TransactionModal({
       ref={formRef}
       show={show}
       onHide={onClose}
-      onEnter={loadTodaysDate}
+      onEnter={handleModalEnter}
       onExited={handleExited}
       centered
       dialogClassName="modal-90w"
@@ -140,7 +181,8 @@ export function TransactionModal({
                 style={{ marginRight: '0.8rem' }}
               />
             )}
-            Adicionar {transactionType === 'deposit' ? 'Receita' : 'Despesa'}
+            {transactionId ? 'Editar' : ' Adicionar'}{' '}
+            {transactionType === 'deposit' ? 'Receita' : 'Despesa'}
           </Modal.Title>
           <button className="close-button">
             <X size={20} onClick={onClose} />
@@ -154,8 +196,8 @@ export function TransactionModal({
                   type="text"
                   placeholder="Título da transação"
                   maxLength={30}
-                  value={titleInput}
                   onChange={(e) => setTitleInput(e.target.value)}
+                  ref={titleInputRef}
                   onBlur={() =>
                     isTitleValid(titleInput)
                       ? setTitleError(false)
@@ -175,9 +217,9 @@ export function TransactionModal({
                   decimalSeparator=","
                   allowedDecimalSeparators={['-', '.', ' ']}
                   decimalScale={2}
-                  placeholder="Valor da transação"
                   displayType="input"
-                  onValueChange={(values, sourceInfo) => {
+                  value={valueInput}
+                  onValueChange={(values) => {
                     setValueInput(values.floatValue as number)
                   }}
                   onBlur={() =>
@@ -202,7 +244,11 @@ export function TransactionModal({
                     setCategoryError(false)
                   }}
                   aria-label="category's options"
-                  value={categoryInput}
+                  value={
+                    transactionToBeEdited && !categoryInput
+                      ? transactionToBeEdited.category
+                      : categoryInput
+                  }
                 >
                   {categories &&
                     categories.map((category) => (
@@ -229,7 +275,7 @@ export function TransactionModal({
 
             <ButtonGroup className="d-flex gap-3">
               <Button variant="success" type="submit" className="rounded">
-                Salvar
+                {transactionId ? 'Editar' : 'Salvar'}
               </Button>
               <Button
                 variant="secondary"

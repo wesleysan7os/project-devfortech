@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, FloatingLabel } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 
 import { StyledContainer } from './styles'
 import { auth, sendPasswordReset } from '../../services/firebase'
 import { Loading } from '../../components/Loading/Loading'
 import { sendPasswordResetEmail } from 'firebase/auth'
+import { ArrowLeft, X } from 'phosphor-react'
 
 export function Reset() {
   const [email, setEmail] = useState('')
@@ -38,15 +39,29 @@ export function Reset() {
 
   return (
     <StyledContainer>
+      <Button
+        onClick={() => navigate('/', { replace: true })}
+        variant="link"
+        className="return-btn"
+      >
+        <X size={32} />
+      </Button>
       <section>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>E-mail</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Digite aqui o seu e-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+        <h3>Recuperação de Senha</h3>
+        <p>Enviaremos um e-mail com instruções de recuperação de conta.</p>
+        <Form.Group className=" recover-input" controlId="formBasicEmail">
+          <FloatingLabel
+            label="Digite E-mail cadastrado"
+            controlId="recover-email"
+          >
+            {' '}
+            <Form.Control
+              type="text"
+              placeholder="Digite aqui o seu e-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </FloatingLabel>
         </Form.Group>
 
         <Button
@@ -54,7 +69,7 @@ export function Reset() {
           onClick={handleResetPassword}
           disabled={isLoading ? 'disabled' : ''}
         >
-          {isLoading ? <Loading /> : 'Enviar e-mail de redefinição de senha'}
+          {isLoading ? <Loading /> : 'Enviar'}
         </Button>
 
         <span>

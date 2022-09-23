@@ -26,6 +26,7 @@ import { Transaction, useTransactions } from '../../../hooks/useTransactions'
 import { formatDate } from '../../../utils/generalFunctions'
 import { ConfirmDeleteModal } from '../../ConfirmDeleteModal'
 import { StackedBarchart } from '../../StackedBarchart'
+import { TransactionModal } from '../../TransactionModal'
 import { Container } from './styles'
 
 export function FullReport() {
@@ -42,6 +43,9 @@ export function FullReport() {
 
   const [displayConfirmationModal, setDisplayConfirmationModal] =
     useState(false)
+
+  const [editedTransactionId, setEditedTransactionId] = useState(0)
+  const [openEditModal, setEditModal] = useState(false)
 
   const [transactionToBeDeleted, setTransactionToBeDeleted] =
     useState<Transaction | null>(null)
@@ -99,7 +103,6 @@ export function FullReport() {
   }, [typeFilter, categoryFilter, dateFilter, titleFilter])
 
   function clearFilters() {
-    toast.success('Filtro limpo. Exibindo todas as transações.')
     setTypeFilter(false)
     setCategoryFilter('all')
     setDateFilter('')
@@ -152,7 +155,7 @@ export function FullReport() {
     }
   }
 
-  function getTransactionTypeIcon(transactionType: string) {
+  function getTransactionTypeIcon(transactionType: string | undefined) {
     if (transactionType === 'deposit') {
       return (
         <TrendUp
@@ -180,8 +183,17 @@ export function FullReport() {
     setDisplayConfirmationModal(false)
   }
 
+  function editTransactionHandler(transactionId: number | string) {
+    setEditModal(true)
+  }
+
   return (
     <>
+      <TransactionModal
+        show={openEditModal}
+        onClose={() => setEditModal(false)}
+        transactionId={editedTransactionId}
+      />
       <ConfirmDeleteModal
         show={displayConfirmationModal}
         transaction={transactionToBeDeleted}
@@ -291,7 +303,13 @@ export function FullReport() {
                         } '${transaction.title}'`,
                       )}
                     >
-                      <Button variant="link">
+                      <Button
+                        variant="link"
+                        onClick={() => {
+                          setEditedTransactionId(transaction.id)
+                          editTransactionHandler(transaction.id)
+                        }}
+                      >
                         <PencilSimpleLine
                           size={18}
                           weight={'thin'}

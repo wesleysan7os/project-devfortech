@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { Link, useNavigate } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, FloatingLabel } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 
 import {
@@ -12,6 +12,7 @@ import {
 import { StyledContainer } from './styles'
 import imgGoogle from '../../assets/img/google-logo.png'
 import { Loading } from '../../components/Loading/Loading'
+import { ArrowLeft, X } from 'phosphor-react'
 
 export function Register() {
   const [email, setEmail] = useState('')
@@ -28,7 +29,7 @@ export function Register() {
     setIsLoading(true)
     try {
       registerWithEmailAndPassword(name, email, password)
-    } catch (err){
+    } catch (err) {
       setIsLoading(false)
     }
   }
@@ -40,50 +41,58 @@ export function Register() {
 
   return (
     <StyledContainer>
+      <Button
+        onClick={() => navigate('/', { replace: true })}
+        variant="link"
+        className="return-btn"
+      >
+        <X size={32} />
+      </Button>
       <section>
-        <Form.Group className="mb-3" controlId="formBasicName">
-          <Form.Label>Nome Completo</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Digite aqui o seu nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+        <h3>Cadastro 🤑</h3>
+        <p>Crie sua conta na Wallet e organize a sua vida financeira.</p>
+        <Form.Group className=" register-input" controlId="formBasicName">
+          <FloatingLabel label="Nome Completo" controlId="register-email">
+            {' '}
+            <Form.Control
+              type="text"
+              placeholder="Digite aqui o seu nome"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </FloatingLabel>
         </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>E-mail</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Digite aqui o seu e-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+        <Form.Group className=" register-input" controlId="formBasicEmail">
+          <FloatingLabel label="E-mail" controlId="register-email">
+            <Form.Control
+              type="email"
+              placeholder="Digite aqui o seu e-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </FloatingLabel>
+        </Form.Group>{' '}
+        <Form.Group className=" register-input" controlId="formBasicPassword">
+          <FloatingLabel label="Senha" controlId="register-email">
+            <Form.Control
+              type="password"
+              placeholder="Digite aqui a sua senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </FloatingLabel>
         </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Senha</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Digite aqui a sua senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-
         <Button
           variant="success"
           onClick={handleRegister}
           disabled={isLoading ? 'disabled' : ''}
         >
-          {isLoading ? <Loading /> : 'Cadastrar'}
+          {isLoading ? <Loading /> : 'Cadastrar com E-mail'}
         </Button>
-
-        <Button variant="outline-danger" onClick={signInWithGoogle}>
+        <Button variant="danger" onClick={signInWithGoogle}>
           <img src={imgGoogle} alt="logo-google" width="24px" />
-          Entrar com o Google
+          Cadastrar com Google
         </Button>
-
         <span>
           Já possui uma conta? <Link to="/">Faça Login</Link>.
         </span>
