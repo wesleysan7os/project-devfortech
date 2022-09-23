@@ -5,6 +5,8 @@ export const BarchartContainer = styled.div`
   color: #f5f5f5;
   border-radius: 8px;
 
+  max-height: 550px;
+
   h5 {
     text-align: center;
     border-radius: 0.5rem;

@@ -12,6 +12,7 @@ import {
 import { useTransactions } from '../../../hooks/useTransactions'
 import { checkDateRange } from '../../../utils/generalFunctions'
 import { Container } from './styles'
+import { useEffect } from 'react'
 
 interface Expenses {
   food: number
@@ -79,6 +80,17 @@ export function ExpensesByCategory() {
   calculateExpensesByCategory('education', 'Educação')
   calculateExpensesByCategory('transports', 'Transporte')
   calculateExpensesByCategory('extra', 'Extra')
+
+  useEffect(() => {
+    calculateExpensesByCategory('food', 'Alimentação')
+    calculateExpensesByCategory('gym', 'Academia')
+    calculateExpensesByCategory('health', 'Saúde')
+    calculateExpensesByCategory('investiments', 'Investimentos')
+    calculateExpensesByCategory('pets', 'Pets')
+    calculateExpensesByCategory('education', 'Educação')
+    calculateExpensesByCategory('transports', 'Transporte')
+    calculateExpensesByCategory('extra', 'Extra')
+  }, [transactions])
 
   return (
     <Container>

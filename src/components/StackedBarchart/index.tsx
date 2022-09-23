@@ -182,7 +182,7 @@ export function StackedBarchart() {
       <h5>Resumo Anual - {getCurrentYear()}</h5>
       <BarChart
         width={500}
-        height={550}
+        height={450}
         data={data}
         margin={{
           top: 20,

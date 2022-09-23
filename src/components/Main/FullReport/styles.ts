@@ -22,8 +22,6 @@ export const Container = styled.main`
     border-radius: 0.5rem;
     color: #eeee;
     overflow: hidden;
-
-    min-height: 500px;
   }
 
   .report-container h5 {
@@ -54,7 +52,7 @@ export const Container = styled.main`
     list-style-type: none;
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 500px;
+    max-height: 450px;
   }
 
   .list li {
@@ -86,14 +84,14 @@ export const Container = styled.main`
   }
 
   li .transaction-title {
-    width: 250px;
+    width: 350px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   li .secondary {
-    width: 200px;
+    width: 250px;
     color: #9b9b9b;
   }
 
