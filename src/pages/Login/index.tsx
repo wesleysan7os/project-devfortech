@@ -7,29 +7,15 @@ import {
   signInWithGoogle,
 } from '../../services/firebase'
 import { Form, Button, Modal, Card, FloatingLabel } from 'react-bootstrap'
-import {
-  ArrowSquareOut,
-  CircleWavyQuestion,
-  Envelope,
-  Quotes,
-} from 'phosphor-react'
+import { ArrowSquareOut, CircleWavyQuestion, Envelope } from 'phosphor-react'
 
-import {
-  HeroContent,
-  HeroH1,
-  HeroItems,
-  HeroP,
-  LoginContainer,
-  StyledContainer,
-  StyledModalContainer,
-} from './styles'
+import { LoginContainer, StyledContainer, StyledModalContainer } from './styles'
 import imgGoogle from '../../assets/img/google-logo.png'
 import imgBusinessman from '../../assets/img/Personal-finance.svg'
 import imgGamaAcademy from '../../assets/img/gama-big-logo.png'
-import imgGamaLogo from '../../assets/img/logo-gama.png'
+
 import { toast } from 'react-toastify'
 import { Loading } from '../../components/Loading/Loading'
-import { getCurrentYear } from '../../utils/generalFunctions'
 
 export function Login() {
   const [displayModalAbout, setDisplayModalAbout] = useState(false)
@@ -257,7 +243,7 @@ export function Login() {
             <Button
               variant="success"
               onClick={login}
-              disabled={isLoading ? 'disabled' : ''}
+              disabled={isLoading ? true : false}
             >
               {isLoading ? (
                 <Loading />

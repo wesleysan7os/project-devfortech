@@ -16,10 +16,7 @@ const styles = StyleSheet.create({
     margin: 30,
     flexDirection: 'column',
   },
-  viewer: {
-    width: window.innerWidth, //the pdf viewer will take up all of the width and height
-    height: window.innerHeight,
-  },
+
   section: {
     margin: 10,
     padding: 10,

@@ -85,7 +85,6 @@ const registerWithEmailAndPassword = async (
     if (err.code === 'auth/wrong-password') {
       return toast.error('E-mail ou senha inválido.')
     }
-    console.log(err)
   }
 }
 

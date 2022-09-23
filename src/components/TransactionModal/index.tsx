@@ -21,7 +21,7 @@ import { useTransactions } from '../../hooks/useTransactions'
 type ModalProps = {
   show: boolean
   transactionType?: 'withdraw' | 'deposit'
-  transactionId: number | string
+  transactionId?: number | string
   onClose: () => void
 }
 
