@@ -67,11 +67,11 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     const fetchData = async () => {
       api
         .get('transactions')
-        .then((response) => setTransactions(response.data.transactions))
+        .then((response) => setTransactions(response.data))
 
       api
         .get('categories')
-        .then((response) => setCategories(response.data.categories))
+        .then((response) => setCategories(response.data))
     }
 
     fetchData()
