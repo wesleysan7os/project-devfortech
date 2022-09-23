@@ -22,8 +22,6 @@ export const Container = styled.main`
     border-radius: 0.5rem;
     color: #eeee;
     overflow: hidden;
-
-    min-height: 500px;
   }
 
   .report-container h5 {
@@ -31,6 +29,7 @@ export const Container = styled.main`
     border-radius: 0.5rem;
     padding: 1rem;
     background-color: #414141;
+    border: 1px solid #565656;
     margin: 0.6rem 0.7rem;
   }
 
@@ -54,7 +53,7 @@ export const Container = styled.main`
     list-style-type: none;
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 500px;
+    max-height: 450px;
   }
 
   .list li {
@@ -86,14 +85,14 @@ export const Container = styled.main`
   }
 
   li .transaction-title {
-    width: 250px;
+    width: 350px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   li .secondary {
-    width: 200px;
+    width: 250px;
     color: #9b9b9b;
   }
 
@@ -108,5 +107,27 @@ export const Container = styled.main`
 
   .list li:hover .actions {
     visibility: visible;
+  }
+
+  .full-report-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.5rem;
+    margin: 10px;
+    border-radius: 0.5rem;
+
+    border: 1px solid #565656;
+    background-color: #414141;
+  }
+
+  @media (max-width: 550px) {
+    .report-container {
+      display: none;
+    }
+
+    max-width: 400px;
+    grid-template-columns: 1fr;
   }
 `

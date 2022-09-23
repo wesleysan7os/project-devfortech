@@ -9,6 +9,7 @@ export const Container = styled.section`
     text-align: center;
     border-radius: 0.5rem;
     padding: 1rem;
+    border: 1px solid #565656;
     background-color: #414141;
     margin: 0.6rem 0.7rem;
   }
@@ -24,6 +25,7 @@ export const Container = styled.section`
       justify-content: space-between;
       border-radius: 0.5rem;
       padding: 0.5rem 3rem;
+      border: 1px solid #565656;
       background-color: #414141;
       margin: 0.6rem 0.7rem;
 

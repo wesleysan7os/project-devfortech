@@ -18,15 +18,12 @@ import { BarchartContainer, StyledTooltip } from './styles'
 export function StackedBarchart() {
   const { transactions } = useTransactions()
 
-  console.log('TRANSACTTTIONS', transactions)
-
   function calcMonthlyTransactions(type: string, month: string) {
     const monthlyExpense = transactions
       .filter((tr) => {
         let transactionMonth = String(tr.createdAt).split('-')[1]
 
         let transactionYear = String(tr.createdAt).split('T')[0].split('-')[0]
-
         return (
           tr.type === type &&
           transactionMonth === month &&
@@ -36,7 +33,6 @@ export function StackedBarchart() {
       })
       .reduce((acc, tr) => acc + tr.amount, 0)
 
-    console.log(monthlyExpense)
     return monthlyExpense
   }
 
@@ -183,10 +179,10 @@ export function StackedBarchart() {
 
   return (
     <BarchartContainer>
-      <h5>Resumo Anual - {getCurrentYear()}</h5>
+      <h5>Análise Anual - {getCurrentYear()}</h5>
       <BarChart
         width={500}
-        height={550}
+        height={450}
         data={data}
         margin={{
           top: 20,

@@ -3,6 +3,7 @@ import {
   Car,
   Dog,
   Eraser,
+  FilePdf,
   Gift,
   GraduationCap,
   Hamburger,
@@ -19,17 +20,26 @@ import {
   Tooltip,
   Form,
   FloatingLabel,
+  Modal,
+  Alert,
 } from 'react-bootstrap'
-import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 import { Transaction, useTransactions } from '../../../hooks/useTransactions'
 import { formatDate } from '../../../utils/generalFunctions'
+import { months } from '../../../utils/generalVariables'
 import { ConfirmDeleteModal } from '../../ConfirmDeleteModal'
+
 import { StackedBarchart } from '../../StackedBarchart'
+import { TransactionModal } from '../../TransactionModal'
 import { Container } from './styles'
 
 export function FullReport() {
+  let navigate = useNavigate()
+
   const { transactions, categories, deleteTransaction } = useTransactions()
+
+  console.log('TRANSAÇOES', transactions)
 
   const [filteredTransactions, setFilteredTransactions] = useState<
     Transaction[]
@@ -42,6 +52,14 @@ export function FullReport() {
 
   const [displayConfirmationModal, setDisplayConfirmationModal] =
     useState(false)
+
+  const [editedTransactionId, setEditedTransactionId] = useState(0)
+  const [openEditModal, setEditModal] = useState(false)
+
+  const [createPdfModal, setCreatePdfModal] = useState(false)
+  const [monthSelectedToPdf, setMonthSelectedToPdf] = useState<number | string>(
+    0,
+  )
 
   const [transactionToBeDeleted, setTransactionToBeDeleted] =
     useState<Transaction | null>(null)
@@ -99,7 +117,6 @@ export function FullReport() {
   }, [typeFilter, categoryFilter, dateFilter, titleFilter])
 
   function clearFilters() {
-    toast.success('Filtro limpo. Exibindo todas as transações.')
     setTypeFilter(false)
     setCategoryFilter('all')
     setDateFilter('')
@@ -152,7 +169,7 @@ export function FullReport() {
     }
   }
 
-  function getTransactionTypeIcon(transactionType: string) {
+  function getTransactionTypeIcon(transactionType: string | undefined) {
     if (transactionType === 'deposit') {
       return (
         <TrendUp
@@ -180,9 +197,17 @@ export function FullReport() {
     setDisplayConfirmationModal(false)
   }
 
-  console.log('transaçoes:', transactions)
+  function editTransactionHandler(transactionId: number | string) {
+    setEditModal(true)
+  }
+
   return (
     <>
+      <TransactionModal
+        show={openEditModal}
+        onClose={() => setEditModal(false)}
+        transactionId={editedTransactionId}
+      />
       <ConfirmDeleteModal
         show={displayConfirmationModal}
         transaction={transactionToBeDeleted}
@@ -245,18 +270,6 @@ export function FullReport() {
                 />
               </FloatingLabel>
             </Form.Group>
-            <OverlayTrigger
-              placement={'top'}
-              delay={{
-                show: delayShow,
-                hide: delayHide,
-              }}
-              overlay={renderTooltip('Limpar filtros')}
-            >
-              <Button variant="outline-danger" onClick={clearFilters}>
-                <Eraser size={32} />
-              </Button>
-            </OverlayTrigger>
           </div>
           <ul className="list">
             {filteredTransactions.length > 0 ? (
@@ -292,7 +305,13 @@ export function FullReport() {
                         } '${transaction.title}'`,
                       )}
                     >
-                      <Button variant="link">
+                      <Button
+                        variant="link"
+                        onClick={() => {
+                          setEditedTransactionId(transaction.id)
+                          editTransactionHandler(transaction.id)
+                        }}
+                      >
                         <PencilSimpleLine
                           size={18}
                           weight={'thin'}
@@ -333,9 +352,90 @@ export function FullReport() {
               </span>
             )}
           </ul>
+          <div className="full-report-actions">
+            <OverlayTrigger
+              placement={'top'}
+              delay={{
+                show: delayShow,
+                hide: delayHide,
+              }}
+              overlay={renderTooltip('Gerar PDF')}
+            >
+              <Button
+                variant="outline-primary"
+                onClick={
+                  () => setCreatePdfModal(true)
+                  // navigate('/pdf-viewer?month=09', { replace: true })
+                }
+              >
+                <FilePdf size={32} />
+              </Button>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement={'top'}
+              delay={{
+                show: delayShow,
+                hide: delayHide,
+              }}
+              overlay={renderTooltip('Limpar filtros')}
+            >
+              <Button variant="outline-danger" onClick={clearFilters}>
+                <Eraser size={32} />
+              </Button>
+            </OverlayTrigger>
+          </div>
         </div>
         <StackedBarchart />
       </Container>
+      <Modal
+        onHide={() => setCreatePdfModal(false)}
+        show={createPdfModal}
+        dialogClassName="modal-90w"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            <FilePdf size={32} /> Relatório em PDF
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <span>
+            Na versão atual do <strong>Wallet</strong>, é possível criar dois
+            tipos de relatório em PDF:
+          </span>
+          <ul>
+            <li>Relatório Completo (Todas as movimentações cadastradas)</li>
+            <li>
+              Relatório Mensal (Apenas movimentações de um mês específico)
+            </li>
+          </ul>
+          <span>Qual você deseja criar?</span>
+          <Form.Select onChange={(e) => setMonthSelectedToPdf(e.target.value)}>
+            <option value={0}>Relatório completo</option>
+            {months.map((month, i) => (
+              <option key={i} value={month.index}>
+                Relatório de {month.name}/{new Date().getFullYear()}
+              </option>
+            ))}
+          </Form.Select>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            onClick={() =>
+              navigate(
+                monthSelectedToPdf !== 0
+                  ? `/pdf-viewer?month=${monthSelectedToPdf}`
+                  : '/pdf-viewer',
+              )
+            }
+            variant="success"
+            style={{ width: '100%' }}
+          >
+            Gerar PDF
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 }

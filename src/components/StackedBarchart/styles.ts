@@ -5,10 +5,13 @@ export const BarchartContainer = styled.div`
   color: #f5f5f5;
   border-radius: 8px;
 
+  max-height: 550px;
+
   h5 {
     text-align: center;
     border-radius: 0.5rem;
     padding: 1rem;
+    border: 1px solid #565656;
     background-color: #414141;
     margin: 0.6rem 0.7rem;
   }

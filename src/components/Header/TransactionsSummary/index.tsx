@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
-import { ArrowDown, ArrowUp, Eye, EyeClosed } from 'phosphor-react'
+import { ArrowDown, ArrowUp, Eye, EyeClosed, SignOut } from 'phosphor-react'
 
 import { Container } from './styles'
 import { useTransactions } from '../../../hooks/useTransactions'
+import { logout } from '../../../services/firebase'
+import { HeaderProps } from '..'
+import { Loading } from '../../Loading/Loading'
 
-export function TransactionsSummary() {
+export function TransactionsSummary(props: HeaderProps) {
   const { transactions } = useTransactions()
   const [showTransactionsSummary, setShowTransactionsSummary] = useState(false)
 
@@ -31,8 +34,21 @@ export function TransactionsSummary() {
     <Container>
       <main className="summary">
         <header>
-          <h2>Olá 🤑</h2>
-          <h4>Fernando Farias</h4>
+          <h2>Olá! 🤑</h2>
+          <h4>
+            {props.userName}
+            <span onClick={logout} title="Sair">
+              {props.userName ? (
+                <SignOut
+                  style={{ cursor: 'pointer' }}
+                  size={32}
+                  weight="thin"
+                />
+              ) : (
+                <Loading />
+              )}
+            </span>
+          </h4>
         </header>
         <section>
           <h4>
@@ -59,7 +75,7 @@ export function TransactionsSummary() {
       </main>
       <section className="income">
         <div>
-          <h4>Entradas</h4>
+          <h4>Receitas</h4>
           <span className={showTransactionsSummary ? '' : 'incomeBlur'}>
             {new Intl.NumberFormat('pt-BR', {
               style: 'currency',
@@ -71,7 +87,7 @@ export function TransactionsSummary() {
       </section>
       <section className="outcome">
         <div>
-          <h4>Saídas</h4>
+          <h4>Despesas</h4>
           <span className={showTransactionsSummary ? '' : 'outcomeBlur'}>
             -{' '}
             {new Intl.NumberFormat('pt-BR', {

@@ -5,14 +5,16 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import { toast } from 'react-toastify'
 
 import { api } from '../services/api'
+import { auth } from '../services/firebase'
 
 export interface Transaction {
   id: number
   title: string
-  type: 'deposit' | 'withdraw'
+  type: 'deposit' | 'withdraw' | undefined
   category:
     | ''
     | 'Alimentação'
@@ -24,7 +26,8 @@ export interface Transaction {
     | 'Transporte'
     | 'Extra'
   amount: number
-  createdAt: Date
+  createdAt: Date | string
+  userID?: string
 }
 
 type TransactionInput = Omit<Transaction, 'id'>
@@ -53,6 +56,7 @@ interface TransactionsContextData {
   categories: Categories[]
   createTransaction: (transactionInput: TransactionInput) => Promise<void>
   deleteTransaction: (transactionId: number) => Promise<void>
+  editTransaction: (transactionToBeEdited: Transaction) => Promise<void>
 }
 
 export const TransactionsContext = createContext<TransactionsContextData>(
@@ -62,35 +66,48 @@ export const TransactionsContext = createContext<TransactionsContextData>(
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [categories, setCategories] = useState<Categories[]>([])
+  const [user] = useAuthState(auth)
 
   useEffect(() => {
     const fetchData = async () => {
-      api
-        .get('transactions')
-        .then((response) => setTransactions(response.data.transactions))
+      api.get('transactions').then((response) => {
+        const userTransactions = response.data.filter(
+          (transaction: any) => transaction.userID === user!.uid,
+        )
 
-      api
-        .get('categories')
-        .then((response) => setCategories(response.data.categories))
+        setTransactions(userTransactions)
+      })
+
+      api.get('categories').then((response) => setCategories(response.data))
     }
 
     fetchData()
-  }, [])
+  }, [user])
 
   async function createTransaction(transactionInput: TransactionInput) {
-    const response = await api.post('/transactions', transactionInput)
+    const transactionInputWithUserId = {
+      ...transactionInput,
+      userID: user!.uid,
+    }
 
-    const { transactions: transaction } = response.data
+    const response = await api.post('/transactions', transactionInputWithUserId)
+    const transaction = response.data
     setTransactions(() => [...transactions, transaction])
   }
+
+  async function editTransaction(transactionInput: Transaction) {
+    const response = await api.put(
+      `/transactions/${transactionInput.id}`,
+      transactionInput,
+    )
+    const transaction = response.data
+    setTransactions(() => [...transactions, transaction])
+  }
+
   async function deleteTransaction(transactionId: number) {
     const deletedTransaction = transactions.find((tr) => tr.id == transactionId)
 
-    console.log(deletedTransaction)
-
     const response = await api.delete(`/transactions/${transactionId}`)
-
-    console.log('RESPOSTA:', response)
 
     const transactionsAfterDelete = transactions.filter((transaction) => {
       return transaction.id != transactionId
@@ -107,7 +124,13 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
   return (
     <TransactionsContext.Provider
-      value={{ transactions, categories, createTransaction, deleteTransaction }}
+      value={{
+        transactions,
+        categories,
+        createTransaction,
+        deleteTransaction,
+        editTransaction,
+      }}
     >
       {children}
     </TransactionsContext.Provider>

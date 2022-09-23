@@ -12,6 +12,7 @@ export const Container = styled.div`
     'summary outcome';
 
   .summary {
+    border: 1px solid #565656;
     grid-area: summary;
   }
 
@@ -33,6 +34,7 @@ export const Container = styled.div`
 
   main {
     background-color: #414141;
+
     border-radius: 0.5rem;
     padding: 0.5rem 1.5rem;
 
@@ -48,6 +50,7 @@ export const Container = styled.div`
     h4 {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       font-weight: normal;
       font-size: 1.3rem;
     }
@@ -60,10 +63,12 @@ export const Container = styled.div`
   }
 
   & > section {
+    border: 4px solid red;
     display: flex;
     align-items: center;
     justify-content: space-between;
     min-height: 7.1rem;
+    border: 1px solid #565656;
     background-color: #414141;
     border-radius: 0.5rem;
     padding-left: 1rem;

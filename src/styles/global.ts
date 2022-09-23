@@ -19,6 +19,10 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+ 
+
+  
+
   body{
     opacity: 0.9;
     background-image: radial-gradient(#242424 2px, #121212 2px);
@@ -28,7 +32,7 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
 
-  body, input, textarea, button{
+  body, textarea, button{
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
 
@@ -38,6 +42,15 @@ export const GlobalStyle = createGlobalStyle`
   
   h1, h2, h3, h4, h5, h6, strong{
     font-weight: 500;
+  }
+
+  a {
+    text-decoration: none;
+    color: #157347;
+  }
+
+  a:hover {
+      opacity: 0.8;
   }
 
   button{
