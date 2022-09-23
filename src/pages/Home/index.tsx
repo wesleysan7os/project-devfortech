@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import {
   query,
   collection,
@@ -43,7 +43,7 @@ export function Home() {
         <Header userName={name} />
       </div>
       <div className="main">
-        <Main />
+        <Outlet />
       </div>
     </GridContainer>
   )

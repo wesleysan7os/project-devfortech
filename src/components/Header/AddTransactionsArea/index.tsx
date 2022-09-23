@@ -4,9 +4,13 @@ import { Plus } from 'phosphor-react'
 
 import { Container, StyledButton } from './styles'
 import { TransactionModal } from '../../TransactionModal'
+import { useNavigate } from 'react-router-dom'
 
 export function AddTransactionsArea() {
   const [displayModal, setDisplayModal] = useState(false)
+  const [selectedReport, setSelectedReport] = useState<
+    'summaryWithdraw' | 'completeReport'
+  >('summaryWithdraw')
   const [transactionType, setTransactionType] = useState<
     'withdraw' | 'deposit'
   >('deposit')
@@ -14,6 +18,8 @@ export function AddTransactionsArea() {
   function handleClose() {
     setDisplayModal(false)
   }
+
+  const navigate = useNavigate()
 
   return (
     <>
@@ -41,8 +47,23 @@ export function AddTransactionsArea() {
           </StyledButton>
         </a>
         <a>
-          <StyledButton className="report" borderColor={'yellow'}>
-            Acessar Relatório Completo
+          <StyledButton
+            onClick={() => {
+              setSelectedReport(
+                selectedReport === 'summaryWithdraw'
+                  ? 'completeReport'
+                  : 'summaryWithdraw',
+              )
+              navigate(selectedReport === 'summaryWithdraw' ? 'report' : '', {
+                replace: true,
+              })
+            }}
+            className="report"
+            borderColor={'yellow'}
+          >
+            {selectedReport === 'summaryWithdraw'
+              ? 'Acessar Relatório Completo'
+              : 'Acessar Resumo Gastos'}
           </StyledButton>
         </a>
       </Container>
