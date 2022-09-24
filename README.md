@@ -98,8 +98,12 @@ Before you need to configure [Firebase](https://firebase.google.com/) (Auth and 
 
 <h2>Organization</h2>
 
-[![Trello](https://img.shields.io/badge/trello-yellow?style=for-the-badge&logo=Trello&logoColor=ffffff)](#)
-[![Notion](https://img.shields.io/badge/Notion-blue?style=for-the-badge&logo=Notion&logoColor=ffffff)](#)
+<h4>Link da documentação disponível (trello, notion e figma):</h4>
+
+[![Trello](https://img.shields.io/badge/trello-yellow?style=for-the-badge&logo=Trello&logoColor=ffffff)](https://trello.com/b/GEhjywoN/devfortech)
+[![Notion](https://img.shields.io/badge/Notion-blue?style=for-the-badge&logo=Notion&logoColor=ffffff)](https://parallel-pheasant-ed6.notion.site/Wallet-136b82f10158445cb46afc17d251fe9c)
+[![Figma](https://img.shields.io/badge/Figma-black?style=for-the-badge&logo=Figma&logoColor=ffffff)](https://www.figma.com/file/j66ay1T6m33aMDyqxyoiVF/Gest%C3%A3o-Financeira?node-id=0%3A1)
+
 ---
 
 <h1 id="author">:bust_in_silhouette: Author</h1>
