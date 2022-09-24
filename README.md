@@ -98,7 +98,7 @@ Before you need to configure [Firebase](https://firebase.google.com/) (Auth and 
 
 <h2>Organization</h2>
 
-<h4>Link da documentação disponível (trello, notion e figma):</h4>
+<h4>Documentation link available (trello, notion and figma):</h4>
 
 [![Trello](https://img.shields.io/badge/trello-yellow?style=for-the-badge&logo=Trello&logoColor=ffffff)](https://trello.com/b/GEhjywoN/devfortech)
 [![Notion](https://img.shields.io/badge/Notion-blue?style=for-the-badge&logo=Notion&logoColor=ffffff)](https://parallel-pheasant-ed6.notion.site/Wallet-136b82f10158445cb46afc17d251fe9c)
